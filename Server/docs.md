@@ -7,3 +7,4 @@ With this conversion, the temperature value holds a value between 0 and 3.3. We 
 
 `gc.collect()` clears the memory -> so the device doesn't run out of memory
 there was originally the error `OSERROR: [Errno 12] ENOMEM` and this solved it
+
