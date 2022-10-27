@@ -1,6 +1,6 @@
 <h1 align="center">
   <img alt="notwordle-logo" src="https://www.checkatrade.com/blog/wp-content/uploads/2020/06/Feature-Cost-to-move-a-radiator.jpg"/><br/>
-  Temperature Monitor Dash
+  Temperature Monitor Dashboard
 </h1>
 <p align="center">View temperatures from your device.<br/>With this <b>monitoring software</b>
 
