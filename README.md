@@ -1,14 +1,14 @@
 <h1 align="center">
-  <img alt="notwordle-logo" src="https://raw.githubusercontent.com/Raaydon/not-wordle/master/public/ogImage.jpg"/><br/>
+  <img alt="notwordle-logo" src="https://www.checkatrade.com/blog/wp-content/uploads/2020/06/Feature-Cost-to-move-a-radiator.jpg"/><br/>
   Temperature Monitor Dash
 </h1>
-<p align="center">Play <a href="https://www.powerlanguage.co.uk/wordle/" >Wordle</a> <b>without limits</b> on <b>Notwordle</b>.<br/>With<b> multiplayer functionality</b>
+<p align="center">View temperatures from your device.<br/>With this <b>monitoring software</b>
 
 <br>
 <br>
 
 
-<p>play my version <a href="https://notwordle.netlify.app">on netlify</a> or <a href="https://notwordle.herokuapp.com/">on heroku (slower)</a></p>
+<p>see here <a href="https://monitor.netlify.app">on netlify</a></p>
 
 
 or run locally with [node](https://nodejs.org/en/):
@@ -36,7 +36,6 @@ and go to [localhost:3000](http://localhost:3000)
 
 - [React](https://reactjs.org/)
 - built with [Vite](https://vitejs.dev/) (previously [Webpack](https://webpack.js.org/))
-- [Wordle](https://www.powerlanguage.co.uk/wordle/) word list
 - [React-Router](https://reacttraining.com/react-router/web/guides/quick-start)
 - deployed on [Netlify](https://www.netlify.com/) and [Heroku](https://www.heroku.com/)
 - server hosted on [Heroku](https://www.heroku.com/)
