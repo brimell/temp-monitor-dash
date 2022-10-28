@@ -1,14 +1,14 @@
 // const rateLimit = require("express-rate-limit");
-const express = require("express");
-const socketio = require("socket.io");
-const cors = require("cors");
-const path = require("path");
+import express, { static } from "express";
+import socketio from "socket.io";
+import cors from "cors";
+import { resolve } from "path";
 
-const { instrument } = require("@socket.io/admin-ui");
+import { instrument } from "@socket.io/admin-ui";
 
-const { Users } = require("./utils/utils");
+import { Users } from "./utils/utils";
 let users = new Users();
-const SocketManager = require("./utils/SocketManager");
+import SocketManager from "./utils/SocketManager";
 
 const app = express();
 const server = require("http").Server(app);
@@ -43,10 +43,10 @@ io.on("connection", (socket) => {
 
 app.use(cors());
 
-app.use(express.static(path.resolve(__dirname, "../build")));
+app.use(static(resolve(__dirname, "../build")));
 
 app.get("*", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "../build/index.html"));
+	res.sendFile(resolve(__dirname, "../build/index.html"));
 });
 // app.get("/port", (req, res) => {
 // 	res.send(process.env.PORT);
