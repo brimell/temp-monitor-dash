@@ -244,6 +244,4 @@ class Users {
 	}
 }
 
-module.exports = {
-	Users,
-};
+export Users
