@@ -244,7 +244,7 @@ const SocketManager = (socket, io, utils) => {
 	messageManager(socket, io, utils);
 };
 
-export {SocketManager};
+module.exports = SocketManager;
 
 // voice chat
 // socket.on("sending signal", (payload) => {
