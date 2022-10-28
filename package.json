@@ -8,7 +8,7 @@
     "host": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "nodemon server/server.js",
+    "server": "nodemon server/server.js && python server/server.py",
     "dura": "dura watch && dura serve"
   },
   "dependencies": {
