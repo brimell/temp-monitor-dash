@@ -8,7 +8,7 @@ import { instrument } from "@socket.io/admin-ui";
 
 import { Users } from "./utils/utils.js";
 let users = new Users();
-import SocketManager from "./utils/SocketManager";
+import SocketManager from "./utils/SocketManager.js";
 
 const app = express();
 const server = require("http").Server(app);
