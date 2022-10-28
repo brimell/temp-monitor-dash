@@ -20,11 +20,7 @@ const io = socketio(server, {
 		origin: [
 			"http://localhost:3000",
 			"https://rimell.cc",
-			"https://raaydon.github.io",
 			"https://admin.socket.io",
-			"https://notwordle.herokuapp.com:*",
-			"https://notwordle-raaydon.vercel.app",
-			"https://notwordle.netlify.app",
 			"http://192.168.1.90:3000"
 		],
 	},
