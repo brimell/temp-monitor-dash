@@ -6,7 +6,7 @@ import { resolve } from "path";
 
 import { instrument } from "@socket.io/admin-ui";
 
-import { Users } from "./utils/utils";
+import { Users } from "./utils/utils.js";
 let users = new Users();
 import SocketManager from "./utils/SocketManager";
 
