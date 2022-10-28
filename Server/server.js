@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
 
 app.use(cors());
 
-app.use(static(resolve(__dirname, "../build")));
+app.use(express_static(resolve(__dirname, "../build")));
 
 app.get("*", (req, res) => {
 	res.sendFile(resolve(__dirname, "../build/index.html"));
