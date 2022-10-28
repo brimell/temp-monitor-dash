@@ -1,5 +1,5 @@
 // const rateLimit = require("express-rate-limit");
-import express, { static as express_static } from "../express";
+import express, { static as express_static } from "express";
 import socketio from "socket.io";
 import cors from "cors";
 import { resolve } from "path";
