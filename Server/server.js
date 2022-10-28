@@ -1,14 +1,14 @@
 // const rateLimit = require("express-rate-limit");
-import express, { static as express_static } from "express";
-import socketio from "socket.io";
-import cors from "cors";
-import { resolve } from "path";
+const express = require("express");
+const socketio = require("socket.io");
+const cors = require("cors");
+const path = require("path");
 
-import { instrument } from "@socket.io/admin-ui";
+const { instrument } = require("@socket.io/admin-ui");
 
-import { Users } from "./utils/utils.js";
+const { Users } = require("./utils/utils");
 let users = new Users();
-import {SocketManager} from "./utils/SocketManager.js";
+const SocketManager = require("./utils/SocketManager");
 
 const app = express();
 const server = require("http").Server(app);
@@ -20,7 +20,11 @@ const io = socketio(server, {
 		origin: [
 			"http://localhost:3000",
 			"https://rimell.cc",
+			"https://raaydon.github.io",
 			"https://admin.socket.io",
+			"https://notwordle.herokuapp.com:*",
+			"https://notwordle-raaydon.vercel.app",
+			"https://notwordle.netlify.app",
 			"http://192.168.1.90:3000"
 		],
 	},
@@ -43,10 +47,10 @@ io.on("connection", (socket) => {
 
 app.use(cors());
 
-app.use(express_static(resolve(__dirname, "../build")));
+app.use(express.static(path.resolve(__dirname, "../build")));
 
 app.get("*", (req, res) => {
-	res.sendFile(resolve(__dirname, "../build/index.html"));
+	res.sendFile(path.resolve(__dirname, "../build/index.html"));
 });
 // app.get("/port", (req, res) => {
 // 	res.send(process.env.PORT);
