@@ -1,5 +1,5 @@
 // const rateLimit = require("express-rate-limit");
-import express, { static as express_static } from "express";
+import express, { static as express_static } from "C:/Users/Bill/AppData/Local/Microsoft/TypeScript/4.8/node_modules/@types/express/index";
 import socketio from "socket.io";
 import cors from "cors";
 import { resolve } from "path";
