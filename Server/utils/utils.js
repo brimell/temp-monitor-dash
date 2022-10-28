@@ -244,4 +244,4 @@ class Users {
 	}
 }
 
-export Users
+export default Users
