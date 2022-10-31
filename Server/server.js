@@ -1,4 +1,3 @@
-// const rateLimit = require("express-rate-limit");
 const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
@@ -30,17 +29,6 @@ io.on("connection", (socket) => {
 	SocketManager(socket, io, users);
 });
 
-// app.use(
-//   rateLimit({
-//     windowMs: 30000, // 30 seconds
-//     max: 500,
-//     message: "You exceeded the rate limit.",
-//     headers: true,
-//   })
-// );
-
-// if you want to host on / then change package.json homepage to /
-
 app.use(cors());
 
 app.use(express.static(path.resolve(__dirname, "../build")));
@@ -48,9 +36,6 @@ app.use(express.static(path.resolve(__dirname, "../build")));
 app.get("*", (req, res) => {
 	res.sendFile(path.resolve(__dirname, "../build/index.html"));
 });
-// app.get("/port", (req, res) => {
-// 	res.send(process.env.PORT);
-// });
 
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
