@@ -28,12 +28,14 @@ export default defineConfig({
           type: 'image/png',
           purpose: 'any maskable',
         }
-      ]
+      ],
+      injectRegister: 'auto',
+      registerType: 'autoUpdate'
     }
     
   })],
 	publicDir: "./public",
-	base: "./",
+	base: ".",
 	build: {
 		outDir: "build",
 		cssCodeSplit: true,

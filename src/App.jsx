@@ -1,6 +1,5 @@
 import React, { useEffect, Suspense, lazy, useState } from "react";
 import "./styles/global.scss";
-import "./components/firebaseInit";
 
 import Loading from "./components/Loading";
 import ReloadPrompt from "./components/ReloadPrompt"
@@ -16,7 +15,7 @@ function App() {
 
 	return (
 		<ContextProvider>
-			<ReloadPrompt/>
+			<ReloadPrompt />
 			<Suspense fallback={<Loading />}>
 				<div className="App">
 					<Routes>
