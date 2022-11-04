@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { polyfill } from "mobile-drag-drop";
-import $ from "jquery";
+// import $ from "jquery";
 
 polyfill();
 window.addEventListener("touchmove", (e) => {
