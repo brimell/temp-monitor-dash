@@ -43,7 +43,8 @@ app.get("/get_temps", (req, res) => {
 
 // start server
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001; // the port env var is set already in the deployment (8080)
+
 server.listen(PORT, () => {
 	console.log(`server listening on port ${PORT}`);
 });
