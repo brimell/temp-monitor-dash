@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useModal } from "react-hooks-use-modal";
-import socket from "../components/socketio";
 
 export const MainContext = createContext();
 

@@ -1,129 +1,111 @@
 import React, { useEffect } from "react";
 import $ from "jquery";
+import background_img from "../assets/floorplan-example.png";
 
 export default function Dashboard() {
-	// useEffect(() => {
-	// }, []);
+	useEffect(() => {
+		const canvas = document.getElementById("canvas");
+		const context = canvas.getContext("2d");
 
-	let canvas = document.getElementById("canvas");
-	let context = canvas.getContext("2d");
+		let items = [];
+		let mouse = {
+			clicked: false,
+			x: 0,
+			y: 0,
+			currentlyHeldItem: null,
+		};
 
-	canvas.width = window.innerWIdth - 30;
-	canvas.height = window.innHeight - 10;
+		addRectangle(40, 40, 200, 200, "#ff6b95");
+		addRectangle(80, 80, 200, 200, "#83ffd1");
+		addRectangle(120, 120, 200, 200, "#7f7fe8");
+		addRectangle(160, 160, 200, 200, "#ffb24b");
 
-	canvas.style.border = "5px solid red";
+		canvas.addEventListener("mousedown", ({ offsetX, offsetY }) => {
+			mouse.clicked = true;
 
-	let canvas_width = canvas.width;
-	let canvas_height = canvas.height;
-
-	function get_offset() {
-		let canvas_offsets = canvas.getBoundingClientRect();
-		offset_x = canvas_offsets.left;
-		offset_y = canvas_offsets.top;
-	}
-
-	get_offset();
-	window.onscroll = function () {
-		get_offset();
-	};
-	window.onresize = function () {
-		get_offset();
-	};
-	canvas.onresize = function () {
-		get_offset();
-	};
-
-	let shapes = [];
-	let current_shape_index = null;
-	let is_dragging = false;
-	let startX;
-	let startY;
-	shapes.push({ x: 200, y: 50, width: 200, height: 200, color: "red" });
-
-	function is_mouse_in_shape(x, y, shape) {
-		let shape_left = shape.x;
-		let shape_right = shape.x + shape.width;
-		let shape_top = shape.y;
-		let shape_bottom = shape.y + shape.height;
-
-		if (
-			x > shape_left &&
-			x < shape_right &&
-			y > shape_top &&
-			y < shape_bottom
-		) {
-			return true;
-		}
-		return false;
-	}
-
-	function mouse_down(event) {
-		event.preventDefault();
-
-		startX = parseInt(event.clientX - offset_x);
-		startY = parseInt(event.clientY - offset_y);
-
-		let index = 0;
-		for (let shape of shapes) {
-			if (is_mouse_in_shape(startX, startY, shape)) {
-				current_shape_index = index;
-				is_dragging = true;
-				return;
+			let item = findTopItem(offsetX, offsetY);
+			if (item) {
+				putItemOnTop(item);
+				mouse.currentlyHeldItem = item;
 			}
-			index ++
+		});
+
+		canvas.addEventListener("mouseup", (_) => {
+			mouse.clicked = false;
+			mouse.currentlyHeldItem = null;
+		});
+
+		canvas.addEventListener("mousemove", ({ offsetX, offsetY }) => {
+			if (mouse.clicked && mouse.currentlyHeldItem) {
+				mouse.currentlyHeldItem.x += offsetX - mouse.x;
+				mouse.currentlyHeldItem.y += offsetY - mouse.y;
+			}
+
+			mouse.x = offsetX;
+			mouse.y = offsetY;
+		});
+
+		function addRectangle(x = 0, y = 0, width = 10, height = 10, color) {
+			let rectangle = {
+				x: x,
+				y: y,
+				width: width,
+				height: height,
+				color: color,
+			};
+
+			items.push(rectangle);
 		}
-	}
-	function mouse_up(event) {
-		if (!is_dragging) {
-			return
+
+		const findTopItem = (x, y) =>
+			items.filter((item) => isInBounds(x, y, item)).pop();
+
+		const isInBounds = (x, y, item) =>
+			x > item.x &&
+			x < item.x + item.width &&
+			y > item.y &&
+			y < item.y + item.height;
+
+		function putItemOnTop(item) {
+			items.splice(items.indexOf(item), 1);
+			items.push(item);
 		}
 
-		event.preventDefault();
-		is_dragging = false;
-	}
+		function render() {
+			context.clearRect(0, 0, canvas.width, canvas.height);
 
-	function mouse_out(event) {
-		if (!is_dragging) {
-			return
+			items.forEach((element) => {
+				context.beginPath();
+				context.rect(
+					element.x,
+					element.y,
+					element.width,
+					element.height
+				);
+				context.fillStyle = element.color;
+				context.fill();
+			});
 		}
-		event.preventDefault();
-		is_dragging = false;
-	}
 
-	function mouse_move(event) {
-		if (!is_dragging) {
-			return;
-		} else {
-			event.preventDefault();
-			let mouseX = parseInt(event.clientX - offset_x);
-			let mouseY = parseInt(event.clientY - offset_y);
+		setInterval((_) => render(), 1000 / 60);
 
-			let dx = mouseX - startX;
-			let dy = mouseY - startY;
+		// image background
 
-			let current_shape = shapes[current_shape_index];
-			current_shape.x += dx;
-			current_shape.y += dy;
+		var canvas2 = document.getElementById("canvas"),
+			ctx = canvas2.getContext("2d");
 
-			draw_shapes();
+		var background = new Image();
+		background.src = "/src/assets/floorplan-example.png";
 
-			startX = mouseX;
-			startY = mouseY;
-		}
-	}
+		// Make sure the image is loaded first otherwise nothing will draw.
+		background.onload = () => {
+			ctx.drawImage(background, 0, 0);
+		};
+	}, []);
 
-	canvas.onmousedown = mouse_down
-	canvas.onmouseup = mouse_up
-	canvas.onmouseout = mouse_out
-	canvas.onmousemove = mouse_move
-
-	function draw_shapes() {
-		context.clearRect(0, 0, canvas_width, canvas_height);
-		for (let shape of shapes) {
-			context.fillStyle = shape.color;
-			context.fillRect(shape.x, shape.y, shape.width, shape.height)
-		}
-	}
-	draw_shapes()
-	return <></>;
+	return (
+		<>
+			<canvas id="canvas"></canvas>
+		</>
+	);
 }
