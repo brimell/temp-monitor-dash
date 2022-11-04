@@ -7,7 +7,8 @@
     "host": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "nodemon server/server.js && python server/server.py",
+    "server": "nodemon server/server.js",
+    "serverprod": "node Server/server.js",
     "dura": "dura watch && dura serve"
   },
   "dependencies": {
@@ -24,8 +25,7 @@
     "react-router-dom": "^6.2.2",
     "sass": "^1.55.0",
     "socket.io": "^4.5.3",
-    "socket.io-client": "^4.4.1",
-    "vite-plugin-pwa": "^0.13.1"
+    "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.22",
