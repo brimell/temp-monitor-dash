@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const app = express();
 const server = require("http").Server(app);
@@ -20,7 +20,8 @@ app.get("*", (req, res) => {
 var con = mysql.createConnection({
 	host: "rimell.cc",
 	user: "tempdb",
-	password: "tempdb123"
+	password: "tempdb123",
+	database : 'temperature_db'
   });
   
   con.connect(function(err) {
