@@ -35,7 +35,7 @@ export default defineConfig({
     
   })],
 	publicDir: "./public",
-	base: ".",
+	base: "./",
 	build: {
 		outDir: "build",
 		cssCodeSplit: true,
