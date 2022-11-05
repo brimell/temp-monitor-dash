@@ -4,7 +4,7 @@ import "./styles/global.scss";
 import Loading from "./components/Loading";
 import ReloadPrompt from "./components/ReloadPrompt"
 import { ContextProvider } from "./context/context";
-import Nav from "./components/nav";
+import Nav from "./components/nav/nav";
 import { Route, Routes } from "react-router-dom";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));

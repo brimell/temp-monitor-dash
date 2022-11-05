@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from "react";
-import $ from "jquery";
 import gsap from "gsap";
-import { MainContext } from "../context/context";
+import { MainContext } from "../../context/context";
 
-export default function Nav() {
+export default function Tabbar() {
 	const { setShowTempBoxes, showTempBoxes } = useContext(MainContext);
 
 	useEffect(() => {
