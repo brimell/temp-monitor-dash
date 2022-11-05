@@ -4,6 +4,7 @@ import { useModal } from "react-hooks-use-modal";
 export const MainContext = createContext();
 
 export function ContextProvider(props) {
+	const [showTempBoxes, setShowTempBoxes] = useState(true);
 
 	// modals
 
@@ -15,6 +16,8 @@ export function ContextProvider(props) {
 	return (
 		<MainContext.Provider
 			value={{
+				showTempBoxes,
+				setShowTempBoxes,
 			}}
 		>
 			{props.children}
