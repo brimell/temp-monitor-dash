@@ -1,128 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { polyfill } from "mobile-drag-drop";
-// import $ from "jquery";
-
-polyfill();
-window.addEventListener("touchmove", (e) => {
-    console.log('touchmove', e)
-});
-
-function DraggableItem(props) {
-	const { children, ...otherProps } = props;
-	return (
-		<div className="item" draggable {...otherProps}>
-			{children}
-		</div>
-	);
-}
-
-function List(props) {
-	const { children, ...otherProps } = props;
-
-	return (
-		<div className="list" {...otherProps}>
-			{children}
-		</div>
-	);
-}
+import $ from "jquery";
 
 export default function Floorplan() {
-	const [dragged, setDragged] = useState(null);
+	const [diffX, setDiffX] = useState(0);
+	const [diffY, setDiffY] = useState(0);
+	const [draggingStatus, setDraggingStatus] = useState(false);
+	const [styles, setStyles] = useState();
 
-	const addHoverStyle = (element, placement = "after") => {
-		if (placement === "before") {
-			element.style.borderTop = "1px solid red";
-			element.style.borderBottom = "none";
-		} else {
-			element.style.borderBottom = "1px solid red";
-			element.style.borderTop = "none";
+	function DraggableItem(props) {
+		const { children, ...otherProps } = props;
+		return (
+			<div
+				className="item"
+				draggable
+				style={styles}
+				onMouseDown={dragStart}
+				onMouseMove={dragging}
+				onMouseUp={dragEnd}
+				{...otherProps}
+			>
+				{children}
+			</div>
+		);
+	}
+
+	function dragStart(e) {
+		setDiffX(e.screenX - e.currentTarget.getBoundingClientRect().left);
+		setDiffY(e.screenY - e.currentTarget.getBoundingClientRect().top);
+		setDraggingStatus(true);
+	}
+
+	function dragging(e) {
+		if (draggingStatus) {
+			var left = e.screenX - diffX;
+			var top = e.screenY - diffY;
+
+			setStyles({
+				left: left,
+				top: top,
+				position: "absolute",
+			});
 		}
-	};
-	const removeHoverStyle = (element) => {
-		element.style.borderBottom = "none";
-		element.style.borderTop = "none";
-	};
-	const preventDefault = (e) => e.preventDefault();
-	const onDragStart = (e) => {
-		setDragged(e.target);
-	};
-	const onDragLeave = (e) => {
-		console.log("left");
-		preventDefault();
-		removeHoverStyle(e.target);
-	};
-	const onDrop = (e) => {
-		const targetIsImage = e.target.className === "list";
-		const list = targetIsImage ? e.target : e.target.parentNode;
-		dragged.parentNode.removeChild(dragged);
-		if (!targetIsImage) {
-			removeHoverStyle(e.target);
-			// Insert at correct position
-			const item = e.target;
-			const itemBounds = item.getBoundingClientRect();
-			const dragY = e.clientY;
-			const yMidpoint = itemBounds.y + itemBounds.height / 2;
-			const insertBefore = dragY < yMidpoint;
-			if (insertBefore) {
-				list.insertBefore(dragged, item);
-			} else {
-				const nextItem = item.nextSibling;
-				if (nextItem) {
-					list.insertBefore(dragged, nextItem);
-				} else {
-					list.appendChild(dragged);
-				}
-			}
-		} else {
-			// Add to end of list
-			list.appendChild(dragged);
-		}
-	};
+	}
+
+	function dragEnd() {
+		setDraggingStatus(false);
+		setStyles({ position: "normal" });
+	}
+
+	function addDraggingStyle(target) {
+		target.classList.add("dragging");
+	}
+	function removeDraggingStyle(target) {
+		target.classList.remove("dragging");
+	}
 
 	return (
 		<>
-			<img src="/floorplan-example.png" alt="" draggable={false} />
-			<div className="floorplan">
-				<List onDragEnter={preventDefault} onDrop={onDrop}>
-					<DraggableItem
-						onDragLeave={onDragLeave}
-						onDragStart={onDragStart}
-					>
-						1A
-					</DraggableItem>
-					<DraggableItem
-						onDragLeave={onDragLeave}
-						onDragStart={onDragStart}
-					>
-						1B
-					</DraggableItem>
-					<DraggableItem
-						onDragLeave={onDragLeave}
-						onDragStart={onDragStart}
-					>
-						1C
-					</DraggableItem>
-				</List>
-				<List onDragEnter={preventDefault} onDrop={onDrop}>
-					<DraggableItem
-						onDragLeave={onDragLeave}
-						onDragStart={onDragStart}
-					>
-						2A
-					</DraggableItem>
-					<DraggableItem
-						onDragLeave={onDragLeave}
-						onDragStart={onDragStart}
-					>
-						2B
-					</DraggableItem>
-					<DraggableItem
-						onDragLeave={onDragLeave}
-						onDragStart={onDragStart}
-					>
-						2C
-					</DraggableItem>
-				</List>
+			<img src="/floorplan-example.png" id="floorplan_img" alt="" />
+			<div className="floorplan_items">
+				<DraggableItem>1A</DraggableItem>
+				<DraggableItem>1B</DraggableItem>
+				<DraggableItem>1C</DraggableItem>
 			</div>
 		</>
 	);

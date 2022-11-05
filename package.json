@@ -18,7 +18,6 @@
     "express": "^4.18.2",
     "gsap": "^3.9.1",
     "jquery": "^3.6.1",
-    "mobile-drag-drop": "^3.0.0-rc.0",
     "react": "^17.0.2",
     "react-dom": "",
     "react-firebase-hooks": "^5.0.2",

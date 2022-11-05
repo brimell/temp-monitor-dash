@@ -1,4 +1,4 @@
-.list {
+.floorplan_items {
 	min-height: 150px;
 	width: 100px;
 	border: 1px dashed #aaa;
@@ -6,6 +6,10 @@
 	vertical-align: top;
 	margin: 10px;
 	padding: 5px 5px 0 5px;
+
+	.item {
+		position: normal;
+	}
 }
 
 .item {
