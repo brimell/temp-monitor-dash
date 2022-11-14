@@ -24,19 +24,18 @@ var con = mysql.createConnection({
 });
 
 con.connect(function (err) {
-	if (err) throw err;
-	console.log("Connected!");
+	if (err) console.log(err);
+	console.log("succesfully connected to mysql server");
 });
 
 // api
 
 app.get("/post_temp", (req, res) => {
-	return JSON.dumps(temperatures);
+	console.log("received data", parseFloat(req.data));
 });
 
 app.get("/get_temps", (req, res) => {
-	console.log(req.data);
-	parseFloat(req.data);
+	return JSON.dumps(temperatures);
 });
 
 // start server
