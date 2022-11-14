@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "nodemon server/server.js",
-    "serverprod": "node Server/server.js",
+    "serverprod": "node server/server.js",
     "dura": "dura watch && dura serve"
   },
   "dependencies": {

@@ -88,7 +88,7 @@ export default function Floorplan() {
 
 	return (
 		<div className="floorplan" onTouchMove={mouseMove}>
-			<img src="/floorplan-example.png" id="floorplan_img" alt="" />
+			<img src="/floorplan-example.png" id="floorplan_img" alt="floorplan_image" />
 			{showTempBoxes && <div className="floorplan_items">
 				{Object.entries(temperatures).map((temp) => {
 					return (
