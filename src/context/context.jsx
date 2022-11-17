@@ -13,11 +13,15 @@ export function ContextProvider(props) {
 			preventScroll: true,
 		});
 
+	// const api_url = "https://tmdash.rimell.cc/api/get_latest_temps"
+	const api_url = "http://192.168.1.90:3003";
+
 	return (
 		<MainContext.Provider
 			value={{
 				showTempBoxes,
 				setShowTempBoxes,
+				api_url,
 			}}
 		>
 			{props.children}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import $ from "jquery";
 import { MainContext } from "../context/context";
+import axios from "axios";
 
 export default function Floorplan() {
 	const [diffX, setDiffX] = useState(0);
@@ -8,7 +9,20 @@ export default function Floorplan() {
 	const [dragging, setDragging] = useState(false);
 	const [styles, setStyles] = useState();
 	const mobile = true;
-	const {showTempBoxes} = useContext(MainContext)
+	const { showTempBoxes, api_url } = useContext(MainContext);
+	const [temps, setTemps] = useState({
+		1: [100, "loading", 1],
+	});
+
+	useEffect(() => {
+		function getLatestTemps() {
+			axios.get(api_url + "/get_latest_temps").then((data) => {
+				setTemps(data.data);
+			});
+		}
+		getLatestTemps();
+		setInterval(getLatestTemps, 10000);
+	}, []);
 
 	function DraggableItem(props) {
 		const { children, ...otherProps } = props;
@@ -80,24 +94,29 @@ export default function Floorplan() {
 		setDragging(false);
 	}
 
-	var temperatures = {
-		1: 24,
-		2: 25,
-		3: 19,
-	};
-
 	return (
 		<div className="floorplan" onTouchMove={mouseMove}>
-			<img src="/floorplan-example.png" id="floorplan_img" alt="floorplan_image" />
-			{showTempBoxes && <div className="floorplan_items">
-				{Object.entries(temperatures).map((temp) => {
-					return (
-						<DraggableItem key={temp[0]} index={temp[0]}>
-							{temp[1]}
-						</DraggableItem>
-					);
-				})}
-			</div>}
+			<img
+				src="/floorplan-example.png"
+				id="floorplan_img"
+				alt="floorplan_image"
+			/>
+			{showTempBoxes && (
+				<div className="floorplan_items">
+					{Object.values(temps).map((temp) => {
+						return (
+							<DraggableItem
+								key={
+									String(temp[2]) + String(temp[0]) + temp[1]
+								}
+								index={temp[2]}
+							>
+								{temp[0]}
+							</DraggableItem>
+						);
+					})}
+				</div>
+			)}
 		</div>
 	);
 }

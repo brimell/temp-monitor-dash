@@ -1,8 +1,11 @@
-from flask import Flask, json, request
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+
 import mysql.connector
 from datetime import datetime
 
 api = Flask(__name__)
+cors = CORS(api, resources={r"*": {"origins": "*"}})
 
 temp_db = mysql.connector.connect(
     host="www.rimell.cc",
@@ -11,7 +14,6 @@ temp_db = mysql.connector.connect(
     database="temperature_db",
     # auth_plugin="mysql_native_password",
 )
-mycursor = temp_db.cursor()
 
 # data structure
 
@@ -22,21 +24,46 @@ mycursor = temp_db.cursor()
 # device_id (auto incremented), alias, x, y, tags (upstairs, downstairs), ip
 
 
-@api.route("/get_temps", methods=["GET"])
+@api.route("/get_latest_temps", methods=["GET"])
 def get_temps():
-    return json.dumps()
+    try:
+        cursor = temp_db.cursor()
+        cursor.execute(f"SELECT * FROM devices")
+        num_devices = len(cursor.fetchall())
+
+        cursor.execute(f"SELECT * FROM temperatures ORDER BY timestamp DESC LIMIT 1000")
+        temperatures = list(cursor.fetchall())
+
+        devices_temp_list = {}
+        for i in range(1, num_devices):
+            devices_temp_list[i] = []
+
+        found_dev_temps = []
+        for temp in temperatures:
+            if temp[2] not in found_dev_temps:
+                devices_temp_list[temp[2]] = temp  # temp[2] is "device_id"
+
+        cursor = temp_db.cursor().close()
+        return devices_temp_list
+    except Exception as err:
+        print(err)
+        cursor = temp_db.cursor().close()
+        return " "
 
 
 @api.route("/post_temp", methods=["POST"])
 def post_temp():
+    cursor = temp_db.cursor()
+
     dt = datetime.now()
     ts = datetime.timestamp(dt)
 
-    print(float(request.data))
     sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({float(request.data)}, '{dt}', 1)"
     # sql = f"INSERT INTO 'temperature_db'.'temperatures' (`temperature`, `timestamp`, `device_id`) VALUES ('{float(request.data)}', '', '{request.device_id}');"
-    mycursor.execute(sql)
+    cursor.execute(sql)
     temp_db.commit()
+    
+    cursor = temp_db.cursor().close()
 
     return " "
 
