@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const mysql = require("mysql2");
 
 const app = express();
 const server = require("http").Server(app);
