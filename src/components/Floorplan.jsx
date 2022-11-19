@@ -8,7 +8,7 @@ export default function Floorplan() {
 	const [diffY, setDiffY] = useState(0);
 	const [dragging, setDragging] = useState(false);
 	const [styles, setStyles] = useState();
-	const [mobile, setMobile] = useState()
+	const [mobile, setMobile] = useState();
 	const { showTempBoxes, api_url } = useContext(MainContext);
 	const [temps, setTemps] = useState({
 		1: ["-", "loading", 1],
@@ -25,7 +25,7 @@ export default function Floorplan() {
 	}, []);
 
 	function DraggableItem(props) {
-		setMobile(screen.width < 450 ? true : false)
+		setMobile(screen.width < 450 ? true : false);
 		const { children, ...otherProps } = props;
 
 		if (mobile) {
@@ -57,7 +57,6 @@ export default function Floorplan() {
 				</div>
 			);
 		}
-		
 	}
 
 	// PLAN
@@ -66,8 +65,7 @@ export default function Floorplan() {
 	// tabbar button shows + hides the floorplan_items
 
 	function dragStart(e) {
-		console.log("drag start");
-		e.preventDefault()
+		e.preventDefault();
 		setDiffX(
 			e.touches[0].screenX - e.currentTarget.getBoundingClientRect().left
 		);
@@ -116,7 +114,7 @@ export default function Floorplan() {
 	return (
 		<div className="floorplan" onTouchMove={mouseMove}>
 			<img
-				src="/floorplan-example.png"
+				src="/imgs/floorplan-example.png"
 				id="floorplan_img"
 				alt="floorplan_image"
 			/>

@@ -1,5 +1,5 @@
 .floorplan {
-	overflow-y: scroll;
+	overflow: hidden;
 	.floorplan_items {
 		background: blue;
 		position: absolute;
@@ -15,6 +15,10 @@
 		.item {
 			position: normal;
 		}
+	}
+	img {
+		pointer-events: none;
+		user-select: none;
 	}
 }
 
