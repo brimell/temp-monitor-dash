@@ -1,10 +1,18 @@
+const { readFileSync } = require("fs");
+const { createServer } = require("https");
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const mysql = require("mysql2");
 
 const app = express();
-const server = require("http").Server(app);
+// const server = require("http").Server(app);
+const server = createServer(credentials, app)
+
+const credentials = {
+	key: readFileSync("/etc/letsencrypt/live/rimell.cc/privkey.pem"),
+	cert: readFileSync("/etc/letsencrypt/live/rimell.cc/fullchain.pem"),
+  };
 
 app.use(cors());
 
