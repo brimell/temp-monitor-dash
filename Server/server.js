@@ -6,13 +6,14 @@ const path = require("path");
 const mysql = require("mysql2");
 
 const app = express();
-// const server = require("http").Server(app);
-const server = createServer(credentials, app)
 
 const credentials = {
 	key: readFileSync("/etc/letsencrypt/live/rimell.cc/privkey.pem"),
 	cert: readFileSync("/etc/letsencrypt/live/rimell.cc/fullchain.pem"),
-  };
+};
+
+// const server = require("http").Server(app);
+const server = createServer(credentials, app);
 
 app.use(cors());
 
@@ -29,5 +30,3 @@ const PORT = process.env.PORT || 3002;
 server.listen(PORT, () => {
 	console.log(`server listening on port ${PORT}`);
 });
-
-
