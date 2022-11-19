@@ -8,10 +8,10 @@ export default function Floorplan() {
 	const [diffY, setDiffY] = useState(0);
 	const [dragging, setDragging] = useState(false);
 	const [styles, setStyles] = useState();
-	const mobile = true;
+	const [mobile, setMobile] = useState()
 	const { showTempBoxes, api_url } = useContext(MainContext);
 	const [temps, setTemps] = useState({
-		1: [100, "loading", 1],
+		1: [10, "loading", 1],
 	});
 
 	useEffect(() => {
@@ -25,21 +25,39 @@ export default function Floorplan() {
 	}, []);
 
 	function DraggableItem(props) {
+		setMobile(screen.width < 450 ? true : false)
 		const { children, ...otherProps } = props;
 
-		return (
-			<div
-				className="item"
-				draggable
-				style={styles}
-				onTouchStart={dragStart}
-				onDragEnd={dragEnd}
-				// onTouchMove={mouseMove}
-				{...otherProps}
-			>
-				{children}
-			</div>
-		);
+		if (mobile) {
+			return (
+				<div
+					className="item"
+					draggable
+					style={styles}
+					onTouchStart={dragStart}
+					onDragEnd={dragEnd}
+					// onTouchMove={mouseMove}
+					{...otherProps}
+				>
+					{children}
+				</div>
+			);
+		} else {
+			return (
+				<div
+					className="item"
+					draggable
+					style={styles}
+					onDragStart={dragStart}
+					onDragEnd={dragEnd}
+					// onTouchMove={mouseMove}
+					{...otherProps}
+				>
+					{children}
+				</div>
+			);
+		}
+		
 	}
 
 	// PLAN
@@ -49,6 +67,7 @@ export default function Floorplan() {
 
 	function dragStart(e) {
 		console.log("drag start");
+		e.preventDefault()
 		setDiffX(
 			e.touches[0].screenX - e.currentTarget.getBoundingClientRect().left
 		);
