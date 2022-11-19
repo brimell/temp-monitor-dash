@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import json
 
 import mysql.connector
 from datetime import datetime
@@ -35,13 +36,11 @@ def get_temps():
         temperatures = list(cursor.fetchall())
 
         devices_temp_list = {}
-        for i in range(1, num_devices):
-            devices_temp_list[i] = []
-
         found_dev_temps = []
         for temp in temperatures:
             if temp[2] not in found_dev_temps:
                 devices_temp_list[temp[2]] = temp  # temp[2] is "device_id"
+                found_dev_temps.append(temp[2])
 
         cursor = temp_db.cursor().close()
         return devices_temp_list
@@ -57,9 +56,10 @@ def post_temp():
 
     dt = datetime.now()
     ts = datetime.timestamp(dt)
+    
+    payload = json.loads(request.data)
 
-    sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({float(request.data)}, '{dt}', 1)"
-    # sql = f"INSERT INTO 'temperature_db'.'temperatures' (`temperature`, `timestamp`, `device_id`) VALUES ('{float(request.data)}', '', '{request.device_id}');"
+    sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({payload['temperature']}, '{dt}', {payload['device_id']})"
     cursor.execute(sql)
     temp_db.commit()
     

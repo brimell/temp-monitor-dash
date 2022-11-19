@@ -11,7 +11,7 @@ export default function Floorplan() {
 	const [mobile, setMobile] = useState()
 	const { showTempBoxes, api_url } = useContext(MainContext);
 	const [temps, setTemps] = useState({
-		1: [10, "loading", 1],
+		1: ["-", "loading", 1],
 	});
 
 	useEffect(() => {

@@ -16,8 +16,10 @@ app.get("*", (req, res) => {
 
 // start server
 
-const PORT = process.env.PORT || 3002; // the port env var is set already in the deployment (8080)
+const PORT = process.env.PORT || 3002;
 
 server.listen(PORT, () => {
 	console.log(`server listening on port ${PORT}`);
 });
+
+
