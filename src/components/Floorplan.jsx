@@ -7,6 +7,7 @@ export default function Floorplan() {
 	const [diffX, setDiffX] = useState(0);
 	const [diffY, setDiffY] = useState(0);
 	const [dragging, setDragging] = useState(false);
+	const [dragging_id, setDragging_id] = useState();
 	const [styles, setStyles] = useState();
 	const [mobile, setMobile] = useState();
 	const { showTempBoxes, api_url } = useContext(MainContext);
@@ -35,11 +36,14 @@ export default function Floorplan() {
 		if (mobile) {
 			return (
 				<div
+					id={props.index}
 					className="item"
 					draggable
-					style={styles}
-					onTouchStart={dragStart}
-					onDragEnd={dragEnd}
+					style={styles ? styles[props.index] : null}
+					onTouchStart={() => {
+						setDragging_id(props.index)
+						setDragging(true);
+					}}
 					// onTouchMove={mouseMove}
 					{...otherProps}
 				>
@@ -49,6 +53,7 @@ export default function Floorplan() {
 		} else {
 			return (
 				<div
+					id={props.index}
 					className="item"
 					draggable
 					style={styles}
@@ -78,21 +83,20 @@ export default function Floorplan() {
 		);
 		setDragging(true);
 	}
-
+	console.log(styles)
 	function mouseMove(e) {
 		console.log("mousemove");
-		console.log(e);
 		if (dragging) {
 			if (mobile) {
 				var left = e.touches[0].screenX - diffX;
 				var top = e.touches[0].screenY - diffY;
-				console.log(e, left, top, diffX, diffY);
-
+				// console.log(e, left, top, diffX, diffY);
 				setStyles({
-					left: left,
-					top: top,
-					opacity: "50%",
-					position: "absolute",
+					dragging_id: {
+						left: left,
+						top: top,
+						position: "absolute",
+					},
 				});
 			} else {
 				var left = e.screenX - diffX;
@@ -102,7 +106,6 @@ export default function Floorplan() {
 				setStyles({
 					left: left,
 					top: top,
-					opacity: "50%",
 					position: "absolute",
 				});
 			}
@@ -111,12 +114,11 @@ export default function Floorplan() {
 
 	function dragEnd() {
 		console.log("dragend");
-		removeDraggingStyle();
 		setDragging(false);
 	}
 
 	return (
-		<div className="floorplan" onTouchMove={mouseMove}>
+		<div className="floorplan" onTouchMove={mouseMove} onTouchEnd={dragEnd}>
 			<img
 				src="/imgs/floorplan-example.png"
 				id="floorplan_img"

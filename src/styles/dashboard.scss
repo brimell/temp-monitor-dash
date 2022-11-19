@@ -1,5 +1,10 @@
 .floorplan {
 	overflow: hidden;
+	user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
 	.floorplan_items {
 		background: blue;
 		position: absolute;
