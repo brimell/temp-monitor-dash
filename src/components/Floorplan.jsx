@@ -4,8 +4,8 @@ import { MainContext } from "../context/context";
 import axios from "axios";
 
 export default function Floorplan() {
-	const [diffX, setDiffX] = useState(0);
-	const [diffY, setDiffY] = useState(0);
+	const [diffX, setDiffX] = useState(50);
+	const [diffY, setDiffY] = useState(50);
 	const [dragging, setDragging] = useState(false);
 	const [dragging_id, setDragging_id] = useState();
 	const [styles, setStyles] = useState();
@@ -41,7 +41,7 @@ export default function Floorplan() {
 					draggable
 					style={styles ? styles[props.index] : null}
 					onTouchStart={() => {
-						setDragging_id(props.index)
+						setDragging_id(props.index);
 						setDragging(true);
 					}}
 					// onTouchMove={mouseMove}
@@ -83,25 +83,25 @@ export default function Floorplan() {
 		);
 		setDragging(true);
 	}
-	console.log(styles)
 	function mouseMove(e) {
-		console.log("mousemove");
+		console.log("mousemove dragging:",dragging, "mobile:",mobile);
 		if (dragging) {
 			if (mobile) {
-				var left = e.touches[0].screenX - diffX;
-				var top = e.touches[0].screenY - diffY;
-				// console.log(e, left, top, diffX, diffY);
-				setStyles({
-					dragging_id: {
-						left: left,
-						top: top,
-						position: "absolute",
-					},
-				});
+				var left = e.touches[0].clientX - diffX;
+				var top = e.touches[0].clientY - diffY;
+				console.log(e, left, top, diffX, diffY);
+				var local_styles = {};
+				local_styles[dragging_id] = {
+					left: left,
+					top: top,
+					position: "absolute",
+				};
+				// console.log(local_styles, dragging_id)
+				setStyles(local_styles);
 			} else {
 				var left = e.screenX - diffX;
 				var top = e.screenY - diffY;
-				console.log(e, left, top, e.screenX, e.screenY, diffX, diffY);
+				// console.log(e, left, top, e.screenX, e.screenY, diffX, diffY);
 
 				setStyles({
 					left: left,
