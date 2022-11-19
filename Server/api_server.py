@@ -7,6 +7,8 @@ import mysql.connector
 from datetime import datetime
 from time import sleep
 
+# from python_arptable import get_arp_table
+
 api = Flask(__name__)
 cors = CORS(api, resources={r"*": {"origins": "*"}})
 
@@ -19,6 +21,13 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 # devices table
 # device_id (auto incremented), alias, x, y, tags (upstairs, downstairs), ip
 
+# def mac_from_ip(ip):
+#     arp_table = get_arp_table()
+
+#     for entry in arp_table:
+#         if entry['IP address'] == ip:
+#             return entry['HW address']
+#     return None
 
 def connectCursor():
     temp_db = mysql.connector.connect(
@@ -66,6 +75,8 @@ def post_temp():
     ts = datetime.timestamp(dt)
 
     payload = json.loads(request.data)
+    client_ip = request.remote_addr
+    client_mac = payload['mac']
 
     sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({payload['temperature']}, '{dt}', {payload['device_id']})"
     cursor.execute(sql)
