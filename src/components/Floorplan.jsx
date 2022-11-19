@@ -25,7 +25,11 @@ export default function Floorplan() {
 	}, []);
 
 	function DraggableItem(props) {
+		// if (document.readState == "complete") {
+		// 	setMobile(screen.width < 450 ? true : false);
+		// }
 		setMobile(screen.width < 450 ? true : false);
+
 		const { children, ...otherProps } = props;
 
 		if (mobile) {

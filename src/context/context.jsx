@@ -16,7 +16,7 @@ export function ContextProvider(props) {
 	if (window.location.host.startsWith("localhost")) {
 		api_url = "http://localhost:3003";
 	} else if (window.location.host.startsWith("192")) {
-		api_url = "http://192.168.1.90:3003";
+		api_url = "http://192.168.1.90:3003"; // make sure that this is http as https won't work
 	} else if (window.location.host.startsWith("rimell")) {
 		api_url = "https://tmdash.rimell.cc/api";
 	} else {
