@@ -9,15 +9,11 @@ export default function Tabbar() {
 
 	useEffect(() => {
 		const tabbar = document.querySelector("#tabbar");
-		const background = tabbar.querySelector(".background path");
 
 		if (location.pathname == "/") {
 			const button = tabbar.querySelector("li.add button");
 
 			button.addEventListener("pointerdown", (e) => {
-				gsap.to(background, {
-					duration: 0.2,
-				});
 				gsap.to(tabbar, {
 					duration: 0.2,
 					"--menu-icon-add-opacity": 1,
@@ -28,18 +24,6 @@ export default function Tabbar() {
 			button.addEventListener("pointerup", (e) => {
 				button.classList.toggle("open");
 				let open = button.classList.contains("open");
-				gsap.to(background, {
-					keyframes: [
-						{
-							duration: 0.1,
-						},
-						{
-							duration: 0.7,
-							delay: 0.05,
-							ease: "elastic.out(1, .5)",
-						},
-					],
-				});
 				gsap.to(tabbar, {
 					duration: 0.3,
 					"--menu-icon-add-opacity": 0,
