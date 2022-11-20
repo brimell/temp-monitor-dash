@@ -14,6 +14,9 @@ export default function Floorplan() {
 	const [temps, setTemps] = useState({
 		1: ["-", "loading", 1],
 	});
+	const [floor, setFloor] = useState(
+		localStorage.getItem("current_floor") || "downstairs"
+	);
 
 	useEffect(() => {
 		function getLatestTemps() {
@@ -120,28 +123,60 @@ export default function Floorplan() {
 	}
 
 	return (
-		<div className="floorplan" onTouchMove={mouseMove} onTouchEnd={dragEnd}>
-			<img
-				src="/imgs/floorplan-example.png"
-				id="floorplan_img"
-				alt="floorplan_image"
-			/>
-			{showTempBoxes && (
-				<div className="floorplan_items">
-					{Object.values(temps).map((temp) => {
-						return (
-							<DraggableItem
-								key={
-									String(temp[2]) + String(temp[0]) + temp[1]
-								}
-								index={temp[2]}
-							>
-								{temp[0]}
-							</DraggableItem>
-						);
-					})}
-				</div>
-			)}
-		</div>
+		<>
+			<ul className="floorplan-nav">
+				<li className="downstairs">
+					<button
+						onClick={() => {
+							setFloor("downstairs");
+							localStorage.setItem("current_floor", "downstairs");
+						}}
+						className={floor == "downstairs" ? "selected" : ""}
+					>
+						Downstairs
+					</button>
+				</li>
+				<li className="upstairs">
+					<button
+						onClick={() => {
+							setFloor("upstairs");
+							localStorage.setItem("current_floor", "upstairs");
+						}}
+						className={floor == "upstairs" ? "selected" : ""}
+					>
+						Upstairs
+					</button>
+				</li>
+			</ul>
+			<div
+				className="floorplan"
+				onTouchMove={mouseMove}
+				onTouchEnd={dragEnd}
+			>
+				<img
+					src="/imgs/floorplan-example.png"
+					id="floorplan_img"
+					alt="floorplan_image"
+				/>
+				{showTempBoxes && (
+					<div className="floorplan_items">
+						{Object.values(temps).map((temp) => {
+							return (
+								<DraggableItem
+									key={
+										String(temp[2]) +
+										String(temp[0]) +
+										temp[1]
+									}
+									index={temp[2]}
+								>
+									{temp[0]}
+								</DraggableItem>
+							);
+						})}
+					</div>
+				)}
+			</div>
+		</>
 	);
 }
