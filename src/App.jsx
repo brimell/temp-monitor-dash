@@ -8,7 +8,8 @@ import Nav from "./components/nav/nav";
 import { Route, Routes } from "react-router-dom";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
-const Instructions = lazy(() => import("./pages/Instructions"));
+const Floorplan = lazy(() => import("./pages/Floorplan"));
+const Settings = lazy(() => import("./pages/Settings"));
 
 function App() {
 	return (
@@ -17,10 +18,11 @@ function App() {
 			<Suspense fallback={<Loading />}>
 				<div className="App">
 					<Routes>
-						<Route path="/" element={<Dashboard />}></Route>
+						<Route path="/" element={<Floorplan />}></Route>
+						<Route path="/dashboard" element={<Dashboard />}></Route>
 						<Route
-							path="/instructions"
-							element={<Instructions />}
+							path="/settings"
+							element={<Settings />}
 						></Route>
 					</Routes>
 				</div>

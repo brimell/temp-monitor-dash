@@ -29,7 +29,9 @@ export default function Floorplan() {
 		// if (document.readState == "complete") {
 		// 	setMobile(screen.width < 450 ? true : false);
 		// }
-		setMobile(screen.width < 450 ? true : false);
+		useEffect(() => {
+			setMobile(screen.width < 450 ? true : false);
+		});
 
 		const { children, ...otherProps } = props;
 
@@ -84,7 +86,7 @@ export default function Floorplan() {
 		setDragging(true);
 	}
 	function mouseMove(e) {
-		console.log("mousemove dragging:",dragging, "mobile:",mobile);
+		console.log("mousemove dragging:", dragging, "mobile:", mobile);
 		if (dragging) {
 			if (mobile) {
 				var left = e.touches[0].clientX - diffX;
