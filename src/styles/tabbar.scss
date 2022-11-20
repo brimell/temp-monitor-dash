@@ -9,7 +9,6 @@
 	--menu-icon-middle-background: #{rgba(#275efe, 0.08)};
 	--options-icon: #404660;
 	--options-y: 16;
-	--options-middle-y: 16;
 	--options-opacity: 0;
 
 	position: fixed;
@@ -63,7 +62,7 @@
 			}
 		}
 		&.options {
-			--svg-size: 16px;
+			--svg-size: 50px;
 			--svg-fill: var(--options-icon);
 
 			align-items: normal;
@@ -82,14 +81,11 @@
 					padding-bottom: 0;
 					svg {
 						opacity: var(--options-opacity);
-					}
-				}
-				&:nth-child(2) {
-					// middle option
-					--y: var(--options-middle-y);
-					--svg-size: 20px;
-					button {
-						padding-bottom: 20px;
+						border-radius: 50%;
+						-webkit-border-radius: 50%;
+						-moz-border-radius: 50%;
+						-khtml-border-radius: 50%;
+						box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 5px;
 					}
 				}
 			}
