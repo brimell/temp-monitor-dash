@@ -48,14 +48,15 @@
 	gap: 20px;
 
 	button {
+        font-family: inherit;
 		font-weight: 200;
 		font-size: 30px;
 
 		background-color: transparent;
-		color: #C4C4C4;
+		color: #c4c4c4;
 		&.selected {
 			font-weight: 700;
-            color: black;
+			color: black;
 		}
 	}
 }
