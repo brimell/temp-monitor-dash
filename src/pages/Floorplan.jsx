@@ -154,7 +154,7 @@ export default function Floorplan() {
 				onTouchEnd={dragEnd}
 			>
 				<img
-					src="/imgs/floorplan-example.png"
+					src="/imgs/floorplan.svg"
 					id="floorplan_img"
 					alt="floorplan_image"
 				/>
