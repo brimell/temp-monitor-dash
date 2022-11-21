@@ -4,7 +4,13 @@ import { MainContext } from "../../context/context";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Tabbar() {
-	const { setShowTempBoxes, showTempBoxes } = useContext(MainContext);
+	const {
+		setShowTempBoxes,
+		showTempBoxes,
+		addDeviceOpen,
+		addDeviceClose,
+		addDeviceIsOpen,
+	} = useContext(MainContext);
 	const location = useLocation();
 
 	useEffect(() => {
@@ -60,11 +66,16 @@ export default function Tabbar() {
 		}
 	}, [location]);
 
-	function handleAddItem() {
-		if (showTempBoxes) {
-			setShowTempBoxes(false);
+	function handleAddDevice() {
+		// if (showTempBoxes) {
+		// 	setShowTempBoxes(false);
+		// } else {
+		// 	setShowTempBoxes(true);
+		// }
+		if (addDeviceIsOpen) {
+			addDeviceClose();
 		} else {
-			setShowTempBoxes(true);
+			addDeviceOpen();
 		}
 	}
 
@@ -95,7 +106,7 @@ export default function Tabbar() {
 						</button>
 					</li>
 					<li>
-						<button onClick={handleAddItem}>
+						<button onClick={handleAddDevice}>
 							<svg
 								width="70"
 								height="70"

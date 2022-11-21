@@ -5,10 +5,10 @@ export const MainContext = createContext();
 
 export function ContextProvider(props) {
 	const [showTempBoxes, setShowTempBoxes] = useState(true);
-	var api_url
+	var api_url;
 	// modals
 
-	const [createGameModal, CreateGameOpen, CreateGameClose, CreateGameIsOpen] =
+	const [addDeviceModal, addDeviceOpen, addDeviceClose, addDeviceIsOpen] =
 		useModal("root", {
 			preventScroll: true,
 		});
@@ -30,6 +30,10 @@ export function ContextProvider(props) {
 				showTempBoxes,
 				setShowTempBoxes,
 				api_url,
+				addDeviceModal,
+				addDeviceOpen,
+				addDeviceClose,
+				addDeviceIsOpen,
 			}}
 		>
 			{props.children}
