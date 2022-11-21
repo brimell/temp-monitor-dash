@@ -1,13 +1,12 @@
 #tabbar {
 	--background: #fff;
 	--shadow: #{rgba(#000, 0.2)};
-	--menu-icon: #bbc1e1;
+	--menu-icon: #000;
+	--options-icon-fill: rgb(75, 75, 75);
 	--menu-icon-move: 0;
 	--menu-icon-rotate: 0;
-	--menu-icon-middle: #275efe;
 	--menu-icon-middle-opacity: 0;
 	--menu-icon-middle-background: #{rgba(#275efe, 0.08)};
-	--options-icon: #404660;
 	--options-y: 16;
 	--options-opacity: 0;
 
@@ -63,7 +62,6 @@
 		}
 		&.options {
 			--svg-size: 50px;
-			--svg-fill: var(--options-icon);
 
 			align-items: normal;
 			width: 75%;
@@ -86,6 +84,9 @@
 						-moz-border-radius: 50%;
 						-khtml-border-radius: 50%;
 						box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 5px;
+						path {
+							fill: var(--options-icon-fill);
+						}
 					}
 				}
 			}
