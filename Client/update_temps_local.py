@@ -33,8 +33,8 @@ while True:
         payload = {
             'temperature': str(temperature), 'mac': str(mac), 'battery_percentage': percentage
             }
-        # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
-        r = requests.post('https://tmdash.rimell.cc/api/post_temp', data = json.dumps(payload))
+        r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
+        # r = requests.post('https://tmdash.rimell.cc/api/post_temp', data = json.dumps(payload))
         
         # print('free:', str(gc.mem_free()))
         # print('info:', str(gc.mem_alloc()))
