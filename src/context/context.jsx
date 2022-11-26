@@ -4,7 +4,6 @@ import { useModal } from "react-hooks-use-modal";
 export const MainContext = createContext();
 
 export function ContextProvider(props) {
-	const [showTempBoxes, setShowTempBoxes] = useState(true);
 	var api_url;
 	// modals
 
@@ -27,8 +26,6 @@ export function ContextProvider(props) {
 	return (
 		<MainContext.Provider
 			value={{
-				showTempBoxes,
-				setShowTempBoxes,
 				api_url,
 				addDeviceModal,
 				addDeviceOpen,
