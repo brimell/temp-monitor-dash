@@ -1,6 +1,6 @@
 import gc
 from machine import ADC, Pin
-# import micropython
+import micropython
 import utime
 import network
 import urequests as requests
