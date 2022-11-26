@@ -14,8 +14,8 @@ conversion_factor = 3.3 / 65535
 vsys = ADC(29)                      # reads the system input voltage
 charging = Pin(24, Pin.IN)          # reading GP24 tells us whether or not USB power is connected
 
-# full_battery = 4.2                  # these are our reference voltages for a full/empty battery, in volts
-# empty_battery = 2.8                 # the values could vary by battery size/manufacturer so you might need to adjust them
+full_battery = 4.2                  # these are our reference voltages for a full/empty battery, in volts
+empty_battery = 2.8                 # the values could vary by battery size/manufacturer so you might need to adjust them
 
 while True:
     reading = temp_sensor.read_u16() * conversion_factor 
@@ -24,7 +24,7 @@ while True:
     mac = ubinascii.hexlify(network.WLAN().config('mac'),':').decode()
     
     # convert the raw ADC read into a voltage, and then a percentage
-    # voltage = vsys.read_u16() * conversion_factor
+    voltage = vsys.read_u16() * conversion_factor
     # percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
     # if percentage > 100:
     #     percentage = 100.00
