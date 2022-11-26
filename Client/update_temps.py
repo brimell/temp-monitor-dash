@@ -25,7 +25,7 @@ while True:
     
     # convert the raw ADC read into a voltage, and then a percentage
     voltage = vsys.read_u16() * conversion_factor
-    print('voltage:',voltage)
+    # print('voltage:',voltage)
     # percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
     # if percentage > 100:
     #     percentage = 100.00
