@@ -1,16 +1,13 @@
 import gc
 import machine
-import micropython
+# import micropython
 import machine
 import utime
 import network
 import urequests as requests
 import json
 import ubinascii
-wlan = network.WLAN(network.STA_IF)
-wlan.active(True)
-wlan.connect("daytime", "ryderpawpatrol")
-utime.sleep(2)
+
 
 sensor_temp = machine.ADC(4)
 conversion_factor = 3.3 / 65535
@@ -22,10 +19,10 @@ while True:
     mac = ubinascii.hexlify(network.WLAN().config('mac'),':').decode()
     try:
         payload = {
-            'temperature': str(temperature), 'device_id': 3, 'mac': str(mac)
+            'temperature': str(temperature), 'mac': str(mac)
             }
-        r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
-        # r = requests.post('https://tmdash.rimell.cc/api/post_temp', data = str(temperature))
+        # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
+        r = requests.post('https://tmdash.rimell.cc/api/post_temp', data = str(temperature))
         
         # print('free:', str(gc.mem_free()))
         # print('info:', str(gc.mem_alloc()))
