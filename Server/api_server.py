@@ -73,11 +73,16 @@ def post_temp():
     
     dt = datetime.now()
     ts = datetime.timestamp(dt)
+    
 
     payload = json.loads(request.data)
     client_ip = request.remote_addr
     client_mac = payload['mac']
-
+    
+    sql = f"SELECT * FROM temperature_db.devices WHERE mac = '{client_mac}'"
+    cursor.execute(sql)
+    device_id = cursor.fetchall()['device_id']
+    
     sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({payload['temperature']}, '{dt}', {payload['device_id']})"
     cursor.execute(sql)
     temp_db.commit()
