@@ -24,7 +24,7 @@ while True:
     mac = ubinascii.hexlify(network.WLAN().config('mac'),':').decode()
     
     # convert the raw ADC read into a voltage, and then a percentage
-    voltage = vsys.read_u16() * conversion_factor
+    # voltage = vsys.read_u16() * conversion_factor
     # print('voltage:',voltage)
     # percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
     # if percentage > 100:
