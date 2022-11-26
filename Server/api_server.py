@@ -81,11 +81,18 @@ def post_temp():
     
     sql = f"SELECT * FROM temperature_db.devices WHERE mac = '{client_mac}'"
     cursor.execute(sql)
-    device_id = cursor.fetchall()['device_id']
+    device_id = cursor.fetchall()[0][0] # [0][0] because the sql fetches the row
     
-    sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({payload['temperature']}, '{dt}', {payload['device_id']})"
-    cursor.execute(sql)
-    temp_db.commit()
+    # check if the device exists in the device db
+    if device_id:
+        sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({payload['temperature']}, '{dt}', {device_id})"
+        cursor.execute(sql)
+        temp_db.commit()
+    else: 
+        # add new device if the device does not exist yet
+        sql = f"INSERT INTO temperature_db.devices (mac) VALUES ('{client_mac}');"
+        cursor.execute(sql)
+        temp_db.commit()
 
     cursor.close()
 
