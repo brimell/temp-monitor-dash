@@ -16,29 +16,25 @@ def setPad(gpio, value):
 def getPad(gpio):
     return mem32[0x4001C000 | (4 + (4 * gpio))]
 
+
 def readVsys():
     gc.collect()
 
     # oldpad = getPad(29)
     # setPad(29, 128)  # no pulls, no output, no input
     adc_Vsys = ADC(3)
-    Vsys = (
-        adc_Vsys.read_u16() * 3.0 * conversion_factor
-    )  # convert the raw ADC read into a voltage
+    Vsys = (adc_Vsys.read_u16() * 3.0 * conversion_factor)  # convert the raw ADC read into a voltage
     # setPad(29, oldpad)
     gc.collect()
 
     return Vsys
 
-charging = Pin(
-    24, Pin.IN
-)  # reading GP24 tells us whether or not USB power is connected
 
-full_battery = (
-    4.8  # these are our reference voltages for a full/empty battery, in volts
-)
+charging = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is connected
 
-empty_battery = 2.8  # the values could vary by battery size/manufacturer so you might need to adjust them
+# the values could vary by battery size/manufacturer so you might need to adjust them
+full_battery = 4.8
+empty_battery = 2.8
 
 while True:
     print("free:", str(gc.mem_free()))
@@ -51,7 +47,7 @@ while True:
 
     # convert the voltage into a percentage
     voltage = readVsys()
-    
+
     percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
     if percentage > 100:
         percentage = 100.00
