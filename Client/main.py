@@ -12,7 +12,9 @@ def connectToWiFi():
 def getCode():
     url = "https://rimell.cc/bill/update_temps.py"
     r = requests.get(url)
-    return r
+    code = r.content
+    r.close()
+    return code
 
 def lightOn():
     led = Pin("LED", Pin.OUT)
@@ -25,12 +27,12 @@ utime.sleep(2)
 print("fetching...")
 
 try:
-    getCode()
     print("fetched code from url...")
+    
     # turn on led to indicate finished connection
     lightOn()
-
-    exec(getCode().content)
+    
+    exec(getCode())
 except Exception as err:
     print("failed to get code...")
     print(err)
