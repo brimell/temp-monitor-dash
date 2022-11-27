@@ -47,6 +47,7 @@ while True:
 
     # convert the voltage into a percentage
     voltage = readVsys()
+    print(charging.value())
     if charging.value() == 1:
         charging_status = 1
     else:
