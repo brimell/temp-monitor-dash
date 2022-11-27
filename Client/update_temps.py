@@ -48,9 +48,9 @@ while True:
     # convert the voltage into a percentage
     voltage = readVsys()
     if charging.value() == 1:
-        charging_bool = 1
+        charging_status = 1
     else:
-        charging_bool = 0
+        charging_status = 0
 
     percentage = round(100 * ((voltage - empty_battery) / (full_battery - empty_battery)),1)
     if percentage > 100:
@@ -63,7 +63,7 @@ while True:
             "temperature": str(temperature),
             "mac": str(mac),
             "battery_percentage": str(percentage),
-            "charging": charging_bool
+            "charging_status": charging_status
         }
         # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
         r = requests.post(
