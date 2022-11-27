@@ -58,7 +58,7 @@ while True:
         payload = {
             "temperature": str(temperature),
             "mac": str(mac),
-            "battery_percentage": str(percentage),
+            "battery_percentage": str(percentage)
         }
         # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
         r = requests.post(
