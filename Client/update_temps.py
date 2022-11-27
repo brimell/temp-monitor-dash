@@ -2,7 +2,7 @@ import gc
 import json
 import ubinascii
 
-print('code execution started')
+print("code execution started")
 
 temp_sensor = ADC(4)
 conversion_factor = 3.3 / 65535
@@ -19,6 +19,8 @@ def getPad(gpio):
 
 
 def readVsys():
+    gc.collect()
+
     oldpad = getPad(29)
     setPad(29, 128)  # no pulls, no output, no input
     adc_Vsys = ADC(3)
@@ -26,6 +28,8 @@ def readVsys():
         adc_Vsys.read_u16() * 3.0 * conversion_factor
     )  # convert the raw ADC read into a voltage
     setPad(29, oldpad)
+    gc.collect()
+
     return Vsys
 
 
@@ -54,6 +58,8 @@ while True:
         percentage = 100.00
 
     try:
+        gc.collect()
+
         payload = {
             "temperature": str(temperature),
             "mac": str(mac),
@@ -64,9 +70,9 @@ while True:
             "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
         )
 
-        # print('free:', str(gc.mem_free()))
-        # print('info:', str(gc.mem_alloc()))
-        # print('info:', str(micropython.mem_info()))
+        print('free:', str(gc.mem_free()))
+        print('info:', str(gc.mem_alloc()))
+        print('info:', str(micropython.mem_info()))
     except Exception as e:
         print(e)
     gc.collect()

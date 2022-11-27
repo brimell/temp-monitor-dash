@@ -20,7 +20,7 @@ def lightOn():
     
 connectToWiFi()
 print("connected to WiFi")
-utime.sleep(5)
+utime.sleep(2)
 
 print("fetching...")
 
