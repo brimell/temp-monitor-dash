@@ -10,7 +10,7 @@ def connectToWiFi():
     wlan.connect("daytime", "ryderpawpatrol")
 
 def getCode():
-    url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/update_temps.py"
+    url = "https://rimell.cc/bill/update_temps.py"
     r = requests.get(url)
     return r
 
@@ -26,7 +26,7 @@ print("fetching...")
 
 try:
     getCode()
-    print("fetched code from github...")
+    print("fetched code from url...")
     # turn on led to indicate finished connection
     lightOn()
 
