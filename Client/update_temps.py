@@ -21,12 +21,16 @@ def readVsys():
     # oldpad = getPad(29)
     # setPad(29, 128)  # no pulls, no output, no input
     adc_Vsys = ADC(3)
-    Vsys = (adc_Vsys.read_u16() * 3.0 * conversion_factor)  # convert the raw ADC read into a voltage
+    Vsys = (
+        adc_Vsys.read_u16() * 3.0 * conversion_factor
+    )  # convert the raw ADC read into a voltage
     # setPad(29, oldpad)
     return Vsys
 
 
-charging = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is connected
+charging = Pin(
+    24, Pin.IN
+)  # reading GP24 tells us whether or not USB power is connected
 
 # the values could vary by battery size/manufacturer so you might need to adjust them
 full_battery = 4.8
@@ -46,7 +50,9 @@ while True:
 
     percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
     if percentage > 100:
-        percentage = 100.00
+        percentage = 100.0
+    if percentage < 0:
+        percentage = 0.0
 
     try:
         payload = {
