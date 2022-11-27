@@ -37,8 +37,8 @@ full_battery = 4.8
 empty_battery = 2.8
 
 while True:
-    print("free:", str(gc.mem_free()))
-    print("info:", str(gc.mem_alloc()))
+    # print("free:", str(gc.mem_free()))
+    # print("info:", str(gc.mem_alloc()))
     # print("info:", str(micropython.mem_info()))
     reading = temp_sensor.read_u16() * conversion_factor
     temperature = round(27 - (reading - 0.706) / 0.001721, 1)
