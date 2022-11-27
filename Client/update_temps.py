@@ -44,6 +44,9 @@ full_battery = (
 empty_battery = 2.8  # the values could vary by battery size/manufacturer so you might need to adjust them
 
 while True:
+    print("free:", str(gc.mem_free()))
+    print("info:", str(gc.mem_alloc()))
+    print("info:", str(micropython.mem_info()))
     gc.collect()
     reading = temp_sensor.read_u16() * conversion_factor
     temperature = round(27 - (reading - 0.706) / 0.001721, 2)
@@ -70,9 +73,6 @@ while True:
             "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
         )
 
-        print("free:", str(gc.mem_free()))
-        print("info:", str(gc.mem_alloc()))
-        print("info:", str(micropython.mem_info()))
     except Exception as e:
         print(e)
     gc.collect()
