@@ -1,6 +1,7 @@
 import gc
 import json
 import ubinascii
+import micropython
 
 print("code execution started")
 
