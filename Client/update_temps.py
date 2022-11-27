@@ -8,8 +8,6 @@ print("code execution started")
 temp_sensor = ADC(4)
 conversion_factor = 3.3 / 65535
 
-gc.collect()
-
 
 def setPad(gpio, value):
     mem32[0x4001C000 | (4 + (4 * gpio))] = value
@@ -42,6 +40,7 @@ charging = Pin(
 full_battery = (
     4.2  # these are our reference voltages for a full/empty battery, in volts
 )
+
 empty_battery = 2.8  # the values could vary by battery size/manufacturer so you might need to adjust them
 
 while True:
@@ -71,9 +70,9 @@ while True:
             "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
         )
 
-        print('free:', str(gc.mem_free()))
-        print('info:', str(gc.mem_alloc()))
-        print('info:', str(micropython.mem_info()))
+        print("free:", str(gc.mem_free()))
+        print("info:", str(gc.mem_alloc()))
+        print("info:", str(micropython.mem_info()))
     except Exception as e:
         print(e)
     gc.collect()
