@@ -42,7 +42,6 @@ while True:
     # print("info:", str(micropython.mem_info()))
     reading = temp_sensor.read_u16() * conversion_factor
     temperature = round(27 - (reading - 0.706) / 0.001721, 1)
-    print(temperature)
     mac = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
 
     # convert the voltage into a percentage
