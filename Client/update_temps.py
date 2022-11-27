@@ -50,10 +50,8 @@ while True:
         # print('free:', str(gc.mem_free()))
         # print('info:', str(gc.mem_alloc()))
         # print('info:', str(micropython.mem_info()))
-        try:
-            gc.collect()
-        except Exception:
-            print("memory couldn't be collected")
+        gc.collect()
+        machine.reset()
     except Exception as e:
         print(e)
     utime.sleep(5)
