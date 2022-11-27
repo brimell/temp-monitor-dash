@@ -8,7 +8,7 @@
 <br>
 
 
-<p>see here <a href="https://monitor.netlify.app">on netlify</a></p>
+<p>see here <a href="https://tmdash.rimell.cc">on my website</a></p>
 
 
 or run locally with [node](https://nodejs.org/en/):
@@ -29,8 +29,6 @@ npm run server
 ```
 
 and go to [localhost:3000](http://localhost:3000)
-
-![Homepage](./public/notwordleHomepage.png)
 
 # Features
 
