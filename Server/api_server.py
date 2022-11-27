@@ -88,18 +88,21 @@ def post_temp():
     device_id = getDeviceID()
 
     def addTempToDB():
-        sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({payload['temperature']}, '{dt}', {device_id})"
-        cursor.execute(sql)
+        sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES (%s, %s, %s)"
+        data = (payload['temperature'], dt, device_id)
+        cursor.execute(sql, data)
         temp_db.commit()
 
     def addBatteryPercToDB():
-        sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, timestamp, device_id) VALUES ({payload['battery_percentage']}, '{dt}', {device_id})"
-        cursor.execute(sql)
+        sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, timestamp, device_id) VALUES (%s, %s, %s)"
+        data = payload['battery_percentage'], dt, device_id
+        cursor.execute(sql,data)
         temp_db.commit()
 
     def addNewDevice():
-        sql = f"INSERT INTO temperature_db.devices (mac) VALUES ('{client_mac}');"
-        cursor.execute(sql)
+        sql = f"INSERT INTO temperature_db.devices (mac) VALUES (%s);"
+        data = (str(client_mac))
+        cursor.execute(sql, data)
         temp_db.commit()
 
     # check if the device exists in the device db
