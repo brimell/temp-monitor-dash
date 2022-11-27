@@ -48,9 +48,9 @@ while True:
     # convert the voltage into a percentage
     voltage = readVsys()
     if charging.value() == 1:
-        charging_bool = True
+        charging_bool = 1
     else:
-        charging_bool = False
+        charging_bool = 0
 
     percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
     if percentage > 100:
