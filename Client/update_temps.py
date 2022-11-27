@@ -52,7 +52,7 @@ while True:
     else:
         charging_bool = 0
 
-    percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
+    percentage = round(100 * ((voltage - empty_battery) / (full_battery - empty_battery)),1)
     if percentage > 100:
         percentage = 100.0
     if percentage < 0:

@@ -81,7 +81,7 @@ def post_temp():
     
     def getDeviceID():
         sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
-        data = (str(client_mac))
+        data = (str(client_mac),)
         cursor.execute(sql,data)
         return cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
     
@@ -101,7 +101,7 @@ def post_temp():
 
     def addNewDevice():
         sql = f"INSERT INTO temperature_db.devices (mac) VALUES (%s);"
-        data = (str(client_mac))
+        data = (str(client_mac),)
         cursor.execute(sql, data)
         temp_db.commit()
 
