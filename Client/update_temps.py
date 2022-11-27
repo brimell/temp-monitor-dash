@@ -27,6 +27,7 @@ full_battery = 4.2                  # these are our reference voltages for a ful
 empty_battery = 2.8                 # the values could vary by battery size/manufacturer so you might need to adjust them
 
 while True:
+    gc.collect()
     reading = temp_sensor.read_u16() * conversion_factor 
     temperature = round(27 - (reading - 0.706)/0.001721, 2)
     print(temperature)
@@ -51,7 +52,7 @@ while True:
         # print('info:', str(micropython.mem_info()))
         try:
             gc.collect()
-        except Exception as e:
+        except Exception:
             print("memory couldn't be collected")
     except Exception as e:
         print(e)
