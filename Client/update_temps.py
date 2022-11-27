@@ -31,8 +31,6 @@ def readVsys():
 
     return Vsys
 
-
-voltage = readVsys()  # reads the system input voltage
 charging = Pin(
     24, Pin.IN
 )  # reading GP24 tells us whether or not USB power is connected
@@ -46,7 +44,7 @@ empty_battery = 2.8  # the values could vary by battery size/manufacturer so you
 while True:
     print("free:", str(gc.mem_free()))
     print("info:", str(gc.mem_alloc()))
-    print("info:", str(micropython.mem_info()))
+    # print("info:", str(micropython.mem_info()))
     gc.collect()
     reading = temp_sensor.read_u16() * conversion_factor
     temperature = round(27 - (reading - 0.706) / 0.001721, 2)
