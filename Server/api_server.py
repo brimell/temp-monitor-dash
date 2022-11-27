@@ -80,8 +80,9 @@ def post_temp():
     client_mac = payload["mac"]
     
     def getDeviceID():
-        sql = f"SELECT * FROM temperature_db.devices WHERE mac = '{client_mac}'"
-        cursor.execute(sql)
+        sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
+        data = (str(client_mac))
+        cursor.execute(sql,data)
         return cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
     
     device_id = getDeviceID()
