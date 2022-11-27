@@ -18,15 +18,11 @@ def getPad(gpio):
 
 
 def readVsys():
-    gc.collect()
-
     # oldpad = getPad(29)
     # setPad(29, 128)  # no pulls, no output, no input
     adc_Vsys = ADC(3)
     Vsys = (adc_Vsys.read_u16() * 3.0 * conversion_factor)  # convert the raw ADC read into a voltage
     # setPad(29, oldpad)
-    gc.collect()
-
     return Vsys
 
 
