@@ -51,7 +51,7 @@ while True:
         # print('info:', str(gc.mem_alloc()))
         # print('info:', str(micropython.mem_info()))
         gc.collect()
-        machine.reset()
+        reset()
     except Exception as e:
         print(e)
     utime.sleep(5)
