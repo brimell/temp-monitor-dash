@@ -54,7 +54,7 @@ while True:
 
     # convert the voltage into a percentage
     voltage = readVsys()
-    clearPad()
+    clearPad(29)
     
     percentage = 100 * ((voltage - empty_battery) / (full_battery - empty_battery))
     if percentage > 100:
