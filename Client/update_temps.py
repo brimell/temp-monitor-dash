@@ -27,6 +27,7 @@ while True:
         r = requests.post(
             "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
         )
+        r.close()
     except Exception as e:
         print(e)
     gc.collect()
