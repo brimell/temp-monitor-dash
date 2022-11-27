@@ -2,6 +2,8 @@ import gc
 import json
 import ubinascii
 
+print('code execution started')
+
 temp_sensor = ADC(4)
 conversion_factor = 3.3 / 65535
 
