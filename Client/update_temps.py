@@ -16,6 +16,8 @@ def setPad(gpio, value):
 def getPad(gpio):
     return mem32[0x4001C000 | (4 + (4 * gpio))]
 
+def clearPad(gpio):
+    mem32[0x4001C000 | (4 + (4 * gpio))] = None
 
 def readVsys():
     gc.collect()
@@ -70,7 +72,7 @@ while True:
         r = requests.post(
             "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
         )
-
+        gc.collect()
     except Exception as e:
         print(e)
     gc.collect()
