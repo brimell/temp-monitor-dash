@@ -7,6 +7,7 @@ from machine import ADC, Pin, mem32
 def connectToWiFi():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
+    wlan.connect("ssid", "pswd")
 
 def getCode():
     url = "https://rimell.cc/bill/update_temps.py"
