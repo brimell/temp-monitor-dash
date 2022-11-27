@@ -95,7 +95,7 @@ def post_temp():
 
     def addBatteryPercToDB():
         sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, timestamp, device_id) VALUES (%s, %s, %s)"
-        data = payload['battery_percentage'], dt, device_id
+        data = (payload['battery_percentage'], dt, device_id)
         cursor.execute(sql,data)
         temp_db.commit()
 
