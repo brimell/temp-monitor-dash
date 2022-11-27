@@ -104,12 +104,12 @@ def post_temp():
     # check if the device exists in the device db
     if device_id:
         addTempToDB()
-        # addBatteryPercToDB()
+        addBatteryPercToDB()
     else:
         # add new device if the device does not exist yet
         addNewDevice()
         addTempToDB()
-        # addBatteryPercToDB()
+        addBatteryPercToDB()
 
     cursor.close()
 
