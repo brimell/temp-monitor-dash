@@ -29,6 +29,7 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 #             return entry['HW address']
 #     return None
 
+
 def connectCursor():
     temp_db = mysql.connector.connect(
         host="www.rimell.cc",
@@ -70,35 +71,53 @@ def get_temps():
 def post_temp():
 
     cursor, temp_db = connectCursor()
-    
+
     dt = datetime.now()
     ts = datetime.timestamp(dt)
-    
 
     payload = json.loads(request.data)
     client_ip = request.remote_addr
-    client_mac = payload['mac']
+    client_mac = payload["mac"]
     
-    sql = f"SELECT * FROM temperature_db.devices WHERE mac = '{client_mac}'"
-    cursor.execute(sql)
-    device_id = cursor.fetchall()[0][0] # [0][0] because the sql fetches the row
+    def getDeviceID():
+        sql = f"SELECT * FROM temperature_db.devices WHERE mac = '{client_mac}'"
+        cursor.execute(sql)
+        return cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
     
-    # check if the device exists in the device db
-    if device_id:
+    device_id = getDeviceID()
+
+    def addTempToDB():
         sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES ({payload['temperature']}, '{dt}', {device_id})"
         cursor.execute(sql)
         temp_db.commit()
-    else: 
-        # add new device if the device does not exist yet
+
+    def addBatteryPercToDB():
+        sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, timestamp, device_id) VALUES ({payload['battery_percentage']}, '{dt}', {device_id})"
+        cursor.execute(sql)
+        temp_db.commit()
+
+    def addNewDevice():
         sql = f"INSERT INTO temperature_db.devices (mac) VALUES ('{client_mac}');"
         cursor.execute(sql)
         temp_db.commit()
+
+    # check if the device exists in the device db
+    if device_id:
+        addTempToDB()
+        addBatteryPercToDB()
+    else:
+        # add new device if the device does not exist yet
+        addNewDevice()
+        addTempToDB()
+        addBatteryPercToDB()
 
     cursor.close()
 
     return " "
 
+
 # error handling
+
 
 @api.errorhandler(503)
 def overload(error):
