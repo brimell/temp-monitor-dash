@@ -10,7 +10,7 @@ def connectToWiFi():
     wlan.connect("ssid", "pswd")
 
 def getCode():
-    url = "https://rimell.cc/bill/update_temps.py"
+    url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/update_temps.py"
     r = requests.get(url)
     code = r.content
     r.close()
