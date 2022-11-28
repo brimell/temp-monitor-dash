@@ -33,7 +33,7 @@ charging = Pin(
 )  # reading GP24 tells us whether or not USB power is connected
 
 # the values could vary by battery size/manufacturer so you might need to adjust them
-full_battery = 4.8
+full_battery = 4.2
 empty_battery = 2.8
 
 while True:
