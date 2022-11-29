@@ -110,12 +110,12 @@ def post_temp():
 
         # check if the device exists in the device db
         if device_id:
-            addTempToDB(temp,client_mac,ts,)
+            addTempToDB(temp,ts,device_id)
             addBatteryPercToDB(perc, cstat, ts, device_id)
         else:
             # add new device if the device does not exist yet
             addNewDevice(client_mac)
-            addTempToDB(temp,client_mac,ts,)
+            addTempToDB(temp,ts,device_id)
             addBatteryPercToDB(perc, cstat, ts, device_id)
             
     cursor.close()
