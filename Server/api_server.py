@@ -115,7 +115,7 @@ def post_temp():
             addNewDevice(client_mac)
             addTempToDB(temp,ts,device_id)
             addBatteryPercToDB(perc, cstat, ts, device_id)
-    temp_db.commit()
+    temp_db.commit() # commit after inserts so that only 1 commit is made
     cursor.close()
 
     return " "
