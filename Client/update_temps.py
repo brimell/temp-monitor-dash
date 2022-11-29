@@ -72,7 +72,7 @@ def sendData():
     r = requests.post(
         "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(cached_data)
     )
-    print('sent data')
+    print('sent data', cached_data)
     r.close()
     disconnectFromWiFi()
     cached_data = []
