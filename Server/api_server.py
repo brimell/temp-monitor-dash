@@ -95,10 +95,10 @@ def post_temp():
         data = (str(client_mac),)
         cursor.execute(sql, data)
         temp_db.commit()
-    
+        
+    payload = json.loads(request.data)
     client_mac = payload[0]["mac"]
     device_id = getDeviceID(client_mac)
-    payload = json.loads(request.data)
     
     for i in range(len(payload)):
         client_ip = request.remote_addr
