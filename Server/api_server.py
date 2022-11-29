@@ -82,19 +82,16 @@ def post_temp():
         sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES (%s, %s, %s)"
         data = (temp, ts, d_id)
         cursor.execute(sql, data)
-        temp_db.commit()
 
     def addBatteryPercToDB(perc, cstat, ts, d_id):
         sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, charging_status, timestamp, device_id) VALUES (%s, %s, %s, %s)"
         data = (perc, cstat, ts, d_id)
         cursor.execute(sql,data)
-        temp_db.commit()
 
     def addNewDevice(client_mac):
         sql = f"INSERT INTO temperature_db.devices (mac) VALUES (%s);"
         data = (str(client_mac),)
         cursor.execute(sql, data)
-        temp_db.commit()
         
     payload = json.loads(request.data)
     client_mac = payload[0]["mac"]
@@ -118,7 +115,7 @@ def post_temp():
             addNewDevice(client_mac)
             addTempToDB(temp,ts,device_id)
             addBatteryPercToDB(perc, cstat, ts, device_id)
-            
+    temp_db.commit()
     cursor.close()
 
     return " "
