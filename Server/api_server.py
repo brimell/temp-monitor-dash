@@ -72,12 +72,10 @@ def post_temp():
 
     cursor, temp_db = connectCursor()
 
-    dt = datetime.now()
-    ts = datetime.timestamp(dt)
-
     payload = json.loads(request.data)
     client_ip = request.remote_addr
     client_mac = payload["mac"]
+    ts = payload['ts']
     
     def getDeviceID():
         sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
@@ -89,13 +87,13 @@ def post_temp():
 
     def addTempToDB():
         sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES (%s, %s, %s)"
-        data = (payload['temperature'], dt, device_id)
+        data = (payload['temperature'], ts, device_id)
         cursor.execute(sql, data)
         temp_db.commit()
 
     def addBatteryPercToDB():
         sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, charging_status, timestamp, device_id) VALUES (%s, %s, %s, %s)"
-        data = (payload['battery_percentage'], payload['charging_status'], dt, device_id)
+        data = (payload['battery_percentage'], payload['charging_status'], ts, device_id)
         cursor.execute(sql,data)
         temp_db.commit()
 
