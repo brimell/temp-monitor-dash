@@ -63,6 +63,7 @@ def collectData():
             "ts": ts
         }
     cached_data.append(data_unit)
+    print('data collected')
 def sendData():
     global cached_data
     connectToWiFi()
