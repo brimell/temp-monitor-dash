@@ -12,6 +12,7 @@ def connectToWiFi():
     
 def disconnectFromWiFi():
     wlan.active(False)
+    print("disconnected from WiFi")
     
 
 def getCode():
@@ -40,5 +41,5 @@ try:
     disconnectFromWiFi()
     exec(code)
 except Exception as err:
-    print("failed to get code...")
+    print("failed to get/run")
     print(err)
