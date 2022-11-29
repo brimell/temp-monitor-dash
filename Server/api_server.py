@@ -4,7 +4,7 @@ from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
 import mysql.connector
-import datetime
+from datetime import datetime
 from time import sleep
 
 # from python_arptable import get_arp_table
