@@ -2,7 +2,6 @@ import gc
 import json
 import ubinascii
 import micropython
-from datetime import datetime
 
 print("code execution started")
 
@@ -53,8 +52,7 @@ def getTemp():
 
 def collectData():
     global cached_data
-    dt = datetime.now()
-    ts = datetime.timestamp(dt)
+    ts = time.time()
     
     data_unit = {
             "temperature": str(getTemp()),

@@ -3,9 +3,8 @@ import network
 import utime
 from machine import ADC, Pin, mem32
 
-
+wlan = network.WLAN(network.STA_IF)
 def connectToWiFi():
-    wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     wlan.connect("ssid", "pswd")
     print("connected to WiFi")
