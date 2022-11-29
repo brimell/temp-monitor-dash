@@ -8,6 +8,12 @@ def connectToWiFi():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     wlan.connect("ssid", "pswd")
+    print("connected to WiFi")
+    utime.sleep(2)
+    
+def disconnectFromWiFi():
+    wlan.active(False)
+    
 
 def getCode():
     url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/update_temps.py"
@@ -16,13 +22,13 @@ def getCode():
     r.close()
     return code
 
-def lightOn():
+def flashLED():
     led = Pin("LED", Pin.OUT)
     led.on()
+    utime.sleep(1)
+    led.off()
     
 connectToWiFi()
-print("connected to WiFi")
-utime.sleep(2)
 
 print("fetching...")
 
@@ -30,9 +36,11 @@ try:
     print("fetched code from url...")
     
     # turn on led to indicate finished connection
-    lightOn()
+    flashLED()
     
-    exec(getCode())
+    code = getCode()
+    disconnectFromWiFi()
+    exec(code)
 except Exception as err:
     print("failed to get code...")
     print(err)

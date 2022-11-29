@@ -5,10 +5,6 @@ import micropython
 
 print("code execution started")
 
-temp_sensor = ADC(4)
-conversion_factor = 3.3 / 65535
-
-
 def setPad(gpio, value):
     mem32[0x4001C000 | (4 + (4 * gpio))] = value
 
@@ -22,55 +18,66 @@ def readVsys():
     setPad(29, 128)  # no pulls, no output, no input
     adc_Vsys = ADC(3)
     Vsys = (
-        adc_Vsys.read_u16() * conversion_factor * 3
+        adc_Vsys.read_u16() * CONVERSION_FACTOR * 3
     )  # convert the raw ADC read into a voltage
     setPad(29, oldpad)
     return Vsys
 
-
-charging = Pin(
-    24, Pin.IN
-)  # reading GP24 tells us whether or not USB power is connected
-
-# the values could vary by battery size/manufacturer so you might need to adjust them
-full_battery = 4.2
-empty_battery = 2.8
-
-while True:
-    # print("free:", str(gc.mem_free()))
-    # print("info:", str(gc.mem_alloc()))
+def printMemoryUsage():
+    print("free:", str(gc.mem_free()))
+    print("info:", str(gc.mem_alloc()))
     # print("info:", str(micropython.mem_info()))
-    reading = temp_sensor.read_u16() * conversion_factor
-    temperature = round(27 - (reading - 0.706) / 0.001721, 1)
-    mac = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
 
-    # convert the voltage into a percentage
+def getBatteryPercentage():
     voltage = readVsys()
-    
-    if charging.value() == 1:
-        charging_status = 1
-    else:
-        charging_status = 0
-
-    percentage = round(100 * ((voltage - empty_battery) / (full_battery - empty_battery)),1)
+    # convert the voltage into a percentage
+    percentage = round(100 * ((voltage - EMPTY_BATTERY) / (FULL_BATTERY - EMPTY_BATTERY)),1)
     if percentage > 100:
         percentage = 100.0
     if percentage < 0:
         percentage = 0.0
+    return percentage
 
-    try:
-        payload = {
-            "temperature": str(temperature),
-            "mac": str(mac),
-            "battery_percentage": str(percentage),
-            "charging_status": charging_status
+def getChargingStatus():
+    if CHARGING.value() == 1:
+        charging_status = 1
+    else:
+        charging_status = 0
+    return charging_status
+
+def getTemp():
+    reading = TEMP_SENSOR.read_u16() * CONVERSION_FACTOR
+    temperature = round(27 - (reading - 0.706) / 0.001721, 1)
+    return temperature
+    
+def sendData():
+    connectToWifi()
+    payload = {
+            "temperature": str(getTemp()),
+            "mac": str(MAC),
+            "battery_percentage": str(getBatteryPercentage()),
+            "charging_status": getChargingStatus()
         }
-        print(payload)
-        # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
-        r = requests.post(
-            "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
-        )
-        r.close()
+    # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
+    r = requests.post(
+        "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
+    )
+    r.close()
+    disconnectFromWifi()
+    
+MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
+TEMP_SENSOR = ADC(4)
+CONVERSION_FACTOR = 3.3 / 65535
+
+CHARGING = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is connected
+
+# the values could vary by battery size/manufacturer so you might need to adjust them
+FULL_BATTERY = 4.2
+EMPTY_BATTERY = 2.8
+
+while True:
+    try:
+        sendData()
     except Exception as e:
         print(e)
     gc.collect()
