@@ -71,48 +71,53 @@ def get_temps():
 def post_temp():
 
     cursor, temp_db = connectCursor()
-
-    payload = json.loads(request.data)
-    client_ip = request.remote_addr
-    client_mac = payload["mac"]
-    ts = payload['ts']
     
-    def getDeviceID():
+    def getDeviceID(client_mac):
         sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
         data = (str(client_mac),)
         cursor.execute(sql,data)
         return cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
-    
-    device_id = getDeviceID()
 
-    def addTempToDB():
+    def addTempToDB(temp,ts, d_id):
         sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES (%s, %s, %s)"
-        data = (payload['temperature'], ts, device_id)
+        data = (temp, ts, d_id)
         cursor.execute(sql, data)
         temp_db.commit()
 
-    def addBatteryPercToDB():
+    def addBatteryPercToDB(perc, cstat, ts, d_id):
         sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, charging_status, timestamp, device_id) VALUES (%s, %s, %s, %s)"
-        data = (payload['battery_percentage'], payload['charging_status'], ts, device_id)
+        data = (perc, cstat, ts, d_id)
         cursor.execute(sql,data)
         temp_db.commit()
 
-    def addNewDevice():
+    def addNewDevice(client_mac):
         sql = f"INSERT INTO temperature_db.devices (mac) VALUES (%s);"
         data = (str(client_mac),)
         cursor.execute(sql, data)
         temp_db.commit()
+    
+    client_mac = payload[0]["mac"]
+    device_id = getDeviceID(client_mac)
+    payload = json.loads(request.data)
+    
+    for i in range(len(payload)):
+        client_ip = request.remote_addr
+        ts = payload[i]['ts']
+        temp = payload[i]['temperature']
+        
+        perc = payload[i]['battery_percentage']
+        cstat = payload[i]['charging_status']
 
-    # check if the device exists in the device db
-    if device_id:
-        addTempToDB()
-        addBatteryPercToDB()
-    else:
-        # add new device if the device does not exist yet
-        addNewDevice()
-        addTempToDB()
-        addBatteryPercToDB()
-
+        # check if the device exists in the device db
+        if device_id:
+            addTempToDB(temp,client_mac,ts,)
+            addBatteryPercToDB(perc, cstat, ts, device_id)
+        else:
+            # add new device if the device does not exist yet
+            addNewDevice(client_mac)
+            addTempToDB(temp,client_mac,ts,)
+            addBatteryPercToDB(perc, cstat, ts, device_id)
+            
     cursor.close()
 
     return " "

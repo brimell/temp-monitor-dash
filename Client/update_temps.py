@@ -52,6 +52,7 @@ def getTemp():
     return temperature
 
 def collectData():
+    global cached_data
     dt = datetime.now()
     ts = datetime.timestamp(dt)
     
@@ -64,14 +65,16 @@ def collectData():
         }
     cached_data.append(data_unit)
 def sendData():
+    global cached_data
     connectToWifi()
     
     # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
     r = requests.post(
-        "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(payload)
+        "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(cached_data)
     )
     r.close()
     disconnectFromWifi()
+    cached_data = []
 
 MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
 TEMP_SENSOR = ADC(4)
@@ -86,10 +89,15 @@ EMPTY_BATTERY = 2.8
 cached_data = []
 
 while True:
+    
+    if len(cached_data) >= 5:
+        sendData()
+    
     try:
         collectData()
     except Exception as e:
         print(e)
+        
     gc.collect()
 
     utime.sleep(5)
