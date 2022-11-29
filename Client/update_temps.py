@@ -2,6 +2,7 @@ import gc
 import json
 import ubinascii
 import micropython
+from time import time
 
 print("code execution started")
 
@@ -52,7 +53,7 @@ def getTemp():
 
 def collectData():
     global cached_data
-    ts = time.time()
+    ts = time()
     
     data_unit = {
             "temperature": str(getTemp()),
@@ -87,7 +88,6 @@ EMPTY_BATTERY = 2.8
 cached_data = []
 
 while True:
-    
     if len(cached_data) >= 5:
         sendData()
     

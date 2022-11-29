@@ -19,6 +19,7 @@ def getCode():
     r = requests.get(url)
     code = r.content
     r.close()
+    print("fetched code from url...")
     return code
 
 def flashLED():
@@ -27,16 +28,14 @@ def flashLED():
     utime.sleep(1)
     led.off()
     
-connectToWiFi()
 
-print("fetching...")
 
 try:
-    print("fetched code from url...")
+    connectToWiFi()
     
     # turn on led to indicate finished connection
     flashLED()
-    
+    print("fetching...")
     code = getCode()
     disconnectFromWiFi()
     exec(code)
