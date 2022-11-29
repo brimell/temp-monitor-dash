@@ -5,10 +5,14 @@ from machine import ADC, Pin, mem32
 
 wlan = network.WLAN(network.STA_IF)
 def connectToWiFi():
+    print('connecting to wifi')
     wlan.active(True)
     wlan.connect("ssid", "pswd")
+    utime.sleep(5)
+    while not wlan.isconnected():
+        print('no connection')
+        utime.sleep(2)
     print("connected to WiFi")
-    utime.sleep(2)
     
 def disconnectFromWiFi():
     wlan.active(False)
@@ -33,7 +37,7 @@ def flashLED():
 
 try:
     connectToWiFi()
-    
+
     # turn on led to indicate finished connection
     flashLED()
     print("fetching...")
@@ -41,5 +45,6 @@ try:
     disconnectFromWiFi()
     exec(code)
 except Exception as err:
-    print("failed to get/run")
+    print("!!! failed to get code or run code !!!")
     print(err)
+

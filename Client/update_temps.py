@@ -65,14 +65,14 @@ def collectData():
     cached_data.append(data_unit)
 def sendData():
     global cached_data
-    connectToWifi()
+    connectToWiFi()
     
     # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
     r = requests.post(
         "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(cached_data)
     )
     r.close()
-    disconnectFromWifi()
+    disconnectFromWiFi()
     cached_data = []
 
 MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
