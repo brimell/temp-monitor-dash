@@ -90,7 +90,7 @@ EMPTY_BATTERY = 2.8
 cached_data = []
 
 while True:
-    if len(cached_data) >= 12:
+    if len(cached_data) >= 60: # every 5 minutes
         sendData()
     
     try:
