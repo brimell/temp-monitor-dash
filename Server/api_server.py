@@ -4,7 +4,7 @@ from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
 import mysql.connector
-from datetime import datetime
+import datetime
 from time import sleep
 
 # from python_arptable import get_arp_table
@@ -103,6 +103,7 @@ def post_temp():
     for i in range(len(payload)):
         client_ip = request.remote_addr
         ts = payload[i]['ts']
+        ts = datetime.fromtimestamp(ts)
         temp = payload[i]['temperature']
         
         perc = payload[i]['battery_percentage']
