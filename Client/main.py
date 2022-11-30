@@ -2,13 +2,12 @@ import urequests as requests
 import network
 import utime
 from machine import ADC, Pin, mem32
-
+    
 wlan = network.WLAN(network.STA_IF)
 def connectToWiFi():
     print('connecting to wifi')
     wlan.active(True)
-    wlan.connect("ssid", "pswd")
-    utime.sleep(5)
+    wlan.connect("ssid", "pwd")
     while not wlan.isconnected():
         print('no connection')
         utime.sleep(2)
@@ -16,11 +15,14 @@ def connectToWiFi():
     
 def disconnectFromWiFi():
     wlan.active(False)
+    while wlan.isconnected():
+        utime.sleep(1)
     print("disconnected from WiFi")
     
 
 def getCode():
-    url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/update_temps.py"
+    # url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/update_temps.py"
+    url = "https://rimell.cc/bill/update_temps.py"
     r = requests.get(url)
     code = r.content
     r.close()
@@ -32,14 +34,10 @@ def flashLED():
     led.on()
     utime.sleep(1)
     led.off()
-    
-
 
 try:
     connectToWiFi()
 
-    # turn on led to indicate finished connection
-    flashLED()
     print("fetching...")
     code = getCode()
     disconnectFromWiFi()

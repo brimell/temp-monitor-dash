@@ -1,10 +1,10 @@
+print("code execution started")
+
 import gc
 import json
 import ubinascii
 import micropython
 from time import time
-
-print("code execution started")
 
 def setPad(gpio, value):
     mem32[0x4001C000 | (4 + (4 * gpio))] = value
