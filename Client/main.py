@@ -7,16 +7,17 @@ wlan = network.WLAN(network.STA_IF)
 def connectToWiFi():
     print('connecting to wifi')
     wlan.active(True)
-    wlan.connect("ssid", "pwd")
+    wlan.connect("essid", "pwd")
     while not wlan.isconnected():
         print('no connection')
         utime.sleep(2)
     print("connected to WiFi")
     
 def disconnectFromWiFi():
-    wlan.active(False)
+    wlan.disconnect()
     while wlan.isconnected():
-        utime.sleep(1)
+        print('disconnecting...', wlan.isconnected())
+        utime.sleep(2)
     print("disconnected from WiFi")
     
 
@@ -41,10 +42,11 @@ def flashLED():
 try:
     connectToWiFi()
 
-
     code = getCode()
     disconnectFromWiFi()
     exec(code)
 except Exception as err:
     print("!!! failed to get code or run code !!!")
     print(err)
+
+
