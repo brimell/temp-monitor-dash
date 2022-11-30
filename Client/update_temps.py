@@ -64,8 +64,7 @@ def collectData():
             "ts": ts
         }
     cached_data.append(data_unit)
-    print('data collected')
-    print('temp:', data_unit['temperature'])
+    print('data collected - temp:', data_unit['temperature'])
 def sendData():
     global cached_data
     connectToWiFi()
@@ -102,4 +101,4 @@ while True:
         print(e)
         
     gc.collect()
-    utime.sleep(SLEEP_TIME * 1000)
+    utime.sleep(SLEEP_TIME)
