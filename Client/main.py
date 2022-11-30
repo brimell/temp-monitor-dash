@@ -16,7 +16,7 @@ def connectToWiFi():
 def disconnectFromWiFi():
     wlan.disconnect()
     while wlan.isconnected():
-        print('disconnecting...', wlan.isconnected())
+        print('disconnecting...')
         utime.sleep(2)
     print("disconnected from WiFi")
     
