@@ -87,7 +87,7 @@ CHARGING = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is 
 FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
-SEND_TO_SERVER_INTERVAL = 0.1 # in minutes
+SEND_TO_SERVER_INTERVAL = 0.5 # in minutes
 
 cached_data = []
 
