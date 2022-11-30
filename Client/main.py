@@ -21,8 +21,11 @@ def disconnectFromWiFi():
     
 
 def getCode():
+    print("fetching...")
+    
     # url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/update_temps.py"
     url = "https://rimell.cc/bill/update_temps.py"
+    
     r = requests.get(url)
     code = r.content
     r.close()
@@ -38,11 +41,10 @@ def flashLED():
 try:
     connectToWiFi()
 
-    print("fetching...")
+
     code = getCode()
     disconnectFromWiFi()
     exec(code)
 except Exception as err:
     print("!!! failed to get code or run code !!!")
     print(err)
-
