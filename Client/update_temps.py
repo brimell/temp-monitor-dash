@@ -88,6 +88,7 @@ FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
 SEND_TO_SERVER_INTERVAL = 0.5 # in minutes
+SLEEP_TIME = 5 # in seconds
 
 cached_data = []
 
@@ -101,5 +102,5 @@ while True:
         print(e)
         
     gc.collect()
-
-    utime.sleep(5)
+    machine.deepsleep(SLEEP_TIME * 1000)
+    # utime.sleep(5)
