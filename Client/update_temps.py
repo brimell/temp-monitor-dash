@@ -40,7 +40,8 @@ def getBatteryPercentage():
     return percentage
 
 def getChargingStatus():
-    if CHARGING.value() == 1:
+    charging = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is connected
+    if charging.value() == 1:
         charging_status = 1
     else:
         charging_status = 0
@@ -80,8 +81,6 @@ def sendData():
 MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
 TEMP_SENSOR = ADC(4)
 CONVERSION_FACTOR = 3.3 / 65535
-
-CHARGING = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is connected
 
 # the values could vary by battery size/manufacturer so you might need to adjust them
 FULL_BATTERY = 4.2
