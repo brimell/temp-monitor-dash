@@ -40,7 +40,7 @@ def getBatteryPercentage():
     return percentage
 
 def getChargingStatus():
-    charging = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is connected
+    charging = Pin('WL_GPIO2', Pin.IN)  # reading GP24 tells us whether or not USB power is connected
     if charging.value() == 1:
         charging_status = 1
     else:
