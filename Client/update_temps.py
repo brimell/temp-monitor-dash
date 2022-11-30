@@ -87,10 +87,12 @@ CHARGING = Pin(24, Pin.IN)  # reading GP24 tells us whether or not USB power is 
 FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
+SEND_TO_SERVER_INTERVAL = 0.1 # in minutes
+
 cached_data = []
 
 while True:
-    if len(cached_data) >= 60: # every 5 minutes
+    if len(cached_data) >= SEND_TO_SERVER_INTERVAL * 12: # minutes * 60 / 5 = frequency
         sendData()
     
     try:
