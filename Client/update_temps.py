@@ -5,6 +5,7 @@ import json
 import ubinascii
 import micropython
 from time import time
+import ntptime
 
 def setPad(gpio, value):
     mem32[0x4001C000 | (4 + (4 * gpio))] = value
@@ -12,7 +13,6 @@ def setPad(gpio, value):
 
 def getPad(gpio):
     return mem32[0x4001C000 | (4 + (4 * gpio))]
-
 
 def readVsys():
     oldpad = getPad(29)
@@ -23,6 +23,10 @@ def readVsys():
     )  # convert the raw ADC read into a voltage
     setPad(29, oldpad)
     return Vsys
+
+def setTime():
+    # r = requests.get('https://tmdash.rimell.cc/api/get_time')
+    ntptime.settime()
 
 def printMemoryUsage():
     print("free:", str(gc.mem_free()))
@@ -68,8 +72,8 @@ def collectData():
 def sendData():
     global cached_data
     connectToWiFi()
-    
-    # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(payload))
+
+    # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(cached_data))
     r = requests.post(
         "https://tmdash.rimell.cc/api/post_temp", data=json.dumps(cached_data)
     )
@@ -78,6 +82,8 @@ def sendData():
     disconnectFromWiFi()
     cached_data = []
     flashLED()
+    
+
 
 MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
 TEMP_SENSOR = ADC(4)
@@ -88,9 +94,12 @@ FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
 SEND_TO_SERVER_INTERVAL = 0.5 # in minutes
-SLEEP_TIME = 5 # in seconds
+SLEEP_TIME = 1 # in seconds
 
 cached_data = []
+
+setTime()
+disconnectFromWiFi()
 
 while True:
     if len(cached_data) >= SEND_TO_SERVER_INTERVAL * 12: # minutes * 60 / 5 = frequency
