@@ -93,8 +93,8 @@ CONVERSION_FACTOR = 3.3 / 65535
 FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
-SEND_TO_SERVER_INTERVAL = 0.5 # in minutes
-SLEEP_TIME = 1 # in seconds
+SLEEP_TIME = 5 # in seconds
+SEND_TO_SERVER_INTERVAL = 1 # in minutes
 
 cached_data = []
 
