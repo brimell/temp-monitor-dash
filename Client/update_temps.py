@@ -94,7 +94,7 @@ FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
 SEND_TO_SERVER_INTERVAL = 0.5 # in minutes
-SLEEP_TIME = 5 # in seconds
+SLEEP_TIME = 1 # in seconds
 
 cached_data = []
 
@@ -102,7 +102,7 @@ setTime()
 disconnectFromWiFi()
 
 while True:
-    if len(cached_data) >= SEND_TO_SERVER_INTERVAL * 12: # minutes * 60 / 5 = frequency
+    if len(cached_data) >= SEND_TO_SERVER_INTERVAL * (60 / SLEEP_TIME): # minutes * 60 / sleep_time = frequency
         sendData()
     
     try:
