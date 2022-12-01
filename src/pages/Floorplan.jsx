@@ -25,7 +25,7 @@ export default function Floorplan() {
 			});
 		}
 		getLatestTemps();
-		setInterval(getLatestTemps, 10000);
+		setInterval(getLatestTemps, 5000);
 	}, []);
 
 	function DraggableItem(props) {

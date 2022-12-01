@@ -102,8 +102,8 @@ setTime()
 disconnectFromWiFi()
 
 while True:
-    if len(cached_data) >= SEND_TO_SERVER_INTERVAL * 12: # minutes * 60 / 5 = frequency
-        sendData()
+    # if len(cached_data) >= SEND_TO_SERVER_INTERVAL * 12: # minutes * 60 / 5 = frequency
+    #     sendData()
     
     try:
         collectData()
