@@ -94,7 +94,7 @@ FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
 SEND_TO_SERVER_INTERVAL = 0.5 # in minutes
-SLEEP_TIME = 1 # in seconds
+SLEEP_TIME = 5 # in seconds
 
 cached_data = []
 
