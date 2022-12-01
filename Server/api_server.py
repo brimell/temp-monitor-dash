@@ -67,9 +67,11 @@ def get_temps():
         return abort(503)
 
 
-# @api.route("/get_time", methods=["GET"])
-# def get_time():
-#     return datetime.now()
+@api.route("/get_time", methods=["GET"])
+def get_time():
+    dt = datetime.now()
+    date = str(dt) + '~' + str(dt.weekday())
+    return date
     
 @api.route("/post_temp", methods=["POST"])
 def post_temp():

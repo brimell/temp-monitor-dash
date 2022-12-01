@@ -6,6 +6,7 @@ import ubinascii
 import micropython
 from time import time
 import ntptime
+import pyb
 
 def setPad(gpio, value):
     mem32[0x4001C000 | (4 + (4 * gpio))] = value
@@ -25,8 +26,29 @@ def readVsys():
     return Vsys
 
 def setTime():
+    def format_date(st,wd):
+        year = int(st[:4])
+        month = int(st[5]) + int(st[6])
+        day = int(st[8]) + int(st[9])
+        hour = int(st[11]) + int(st[12])
+        minute = int(st[14]) + int(st[15])
+        second = int(st[17]) + int(st[18])
+        milliseconds = int(st[20:])
+        weekday = int(wd)
+        print(year, month, day, weekday, hour, minute, second, milliseconds)
+        # return (year, month, day, weekday, hour, minute, second, milliseconds)
+        return (year, month, day, hour, minute, second, milliseconds)
+        
     # r = requests.get('https://tmdash.rimell.cc/api/get_time')
-    ntptime.settime()
+    r = requests.get('http://192.168.1.90:3003/get_time')
+    
+    received_date = str(r.content).replace('b','').replace("'", "")
+    dt,weekday = received_date.split('~')
+    date = format_date(dt,weekday)
+    rtc = pyb.RTC()
+    rtc.datetime(date)
+    print(date)
+    r.close()
 
 def printMemoryUsage():
     print("free:", str(gc.mem_free()))
