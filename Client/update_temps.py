@@ -81,9 +81,6 @@ def sendData():
     r.close()
     disconnectFromWiFi()
     cached_data = []
-    flashLED()
-    
-
 
 MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
 TEMP_SENSOR = ADC(4)
