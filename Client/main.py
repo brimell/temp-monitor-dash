@@ -1,16 +1,23 @@
 import urequests as requests
 import network
 import utime
-from machine import ADC, Pin, mem32
+from machine import ADC, Pin, mem32, RTC
     
 wlan = network.WLAN(network.STA_IF)
 def connectToWiFi():
     print('connecting to wifi')
     wlan.active(True)
     wlan.connect("ssid", "pwd")
+    count = 0
     while not wlan.isconnected():
         print('no connection')
         utime.sleep(2)
+        count += 1
+        if count >= 10:
+            wlan.active(False)
+            wlan.active(True)
+            wlan.connect("ssid", "pwd")
+            count = 0
     print("connected to WiFi")
     
 def disconnectFromWiFi():
@@ -47,5 +54,3 @@ try:
 except Exception as err:
     print("!!! failed to get code or run code !!!")
     print(err)
-
-
