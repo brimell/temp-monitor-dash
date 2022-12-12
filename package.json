@@ -4,8 +4,7 @@
   "version": "1.0.1",
   "homepage": "www.rimell.cc/tmdash/",
   "scripts": {
-    "dev": "vite",
-    "host": "vite --host",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "server": "nodemon server/server.js",
