@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import $ from "jquery";
 import { MainContext } from "../context/context";
 import axios from "axios";
+import { apiUrl } from "../context/constants";
 
 export default function Floorplan() {
 	const [diffX, setDiffX] = useState(50);
@@ -10,7 +11,6 @@ export default function Floorplan() {
 	const [dragging_id, setDragging_id] = useState();
 	const [styles, setStyles] = useState();
 	const [mobile, setMobile] = useState();
-	const { api_url } = useContext(MainContext);
 	const [temps, setTemps] = useState({
 		1: ["-", "loading", 1],
 	});
@@ -20,7 +20,7 @@ export default function Floorplan() {
 
 	useEffect(() => {
 		function getLatestTemps() {
-			axios.get(api_url + "/get_latest_temps").then((data) => {
+			axios.get(apiUrl + "/get_latest_temps").then((data) => {
 				setTemps(data.data);
 			});
 		}
