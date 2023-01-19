@@ -1,4 +1,4 @@
-export const apiUrl = () => {
+export const apiUrl = (): string => {
 	if (window.location.host.startsWith("localhost")) {
 		return "http://localhost:3003";
 	} else if (window.location.host.startsWith("192")) {

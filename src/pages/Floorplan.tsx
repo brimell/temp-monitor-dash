@@ -4,32 +4,30 @@ import { MainContext } from "../context/context";
 import axios from "axios";
 import { apiUrl } from "../context/constants";
 
+interface stylesI {
+	left?: number;
+	top?: number;
+	position?: string;
+}
 export default function Floorplan() {
 	const [diffX, setDiffX] = useState(50);
 	const [diffY, setDiffY] = useState(50);
 	const [dragging, setDragging] = useState(false);
-	const [dragging_id, setDragging_id] = useState();
-	const [styles, setStyles] = useState();
-	const [mobile, setMobile] = useState();
+	const [dragging_id, setDragging_id] = useState<string>("");
+	const [styles, setStyles] = useState<stylesI>();
+	const [mobile, setMobile] = useState<boolean>(false);
 	const [temps, setTemps] = useState({
 		1: ["-", "loading", 1],
 	});
 	const [floor, setFloor] = useState(
 		localStorage.getItem("current_floor") || "downstairs"
 	);
-	const [err, setErr] = useState(false);
 
 	useEffect(() => {
 		function getLatestTemps() {
-			if (err) return;
-			axios
-				.get(apiUrl + "/get_latest_temps")
-				.then((data) => {
-					setTemps(data.data);
-				})
-				.catch(() => {
-					setErr(true);
-				});
+			axios.get(apiUrl() + "/get_latest_temps").then((data) => {
+				setTemps(data.data);
+			});
 		}
 		getLatestTemps();
 		setInterval(getLatestTemps, 5000);
@@ -99,10 +97,10 @@ export default function Floorplan() {
 		console.log("mousemove dragging:", dragging, "mobile:", mobile);
 		if (dragging) {
 			if (mobile) {
-				var left = e.touches[0].clientX - diffX;
-				var top = e.touches[0].clientY - diffY;
+				let left = e.touches[0].clientX - diffX;
+				let top = e.touches[0].clientY - diffY;
 				console.log(e, left, top, diffX, diffY);
-				var local_styles = {};
+				let local_styles = {};
 				local_styles[dragging_id] = {
 					left: left,
 					top: top,
@@ -111,8 +109,8 @@ export default function Floorplan() {
 				// console.log(local_styles, dragging_id)
 				setStyles(local_styles);
 			} else {
-				var left = e.screenX - diffX;
-				var top = e.screenY - diffY;
+				let left = e.screenX - diffX;
+				let top = e.screenY - diffY;
 				// console.log(e, left, top, e.screenX, e.screenY, diffX, diffY);
 
 				setStyles({
