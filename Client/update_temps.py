@@ -98,13 +98,13 @@ def sendData(data):
 
 def getMode():
     connectToWiFi()
-    
+
     req = requests.get("https://tmdash.rimell.cc/api/get_mode")
     res = req.content
-    
+
     disconnectFromWiFi()
-    
-    return res
+    print("mode:", res.decode("ascii"))
+    return res.decode("ascii")
 
 
 MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
