@@ -109,4 +109,4 @@ while True:
         
     gc.collect()
     # utime.sleep(SLEEP_TIME)
-    machine.deepsleep(SLEEP_TIME * 1000)
+    machine.lightsleep(SLEEP_TIME * 1000)
