@@ -83,7 +83,7 @@ def get_time():
 
 @api.route("/get_settings", endpoint="func1", methods=["GET"])
 def get_mode():
-    return {settings: settings_state}
+    return settings_state
 
 
 @api.route("/set_mode", endpoint="func2", methods=["POST"])
