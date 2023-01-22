@@ -88,9 +88,9 @@ def get_mode():
 
 @api.route("/set_mode", endpoint="func2", methods=["POST"])
 def get_mode():
-    global mode
+    global settings_state
     payload = json.loads(request.data)
-    mode = payload.mode
+    settings_state["mode"] = payload.mode
 
 
 @api.route("/post_temp", methods=["GET"])
