@@ -88,7 +88,7 @@ def sendData(data):
     # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(cached_data))
     req = requests.get("https://tmdash.rimell.cc/api/post_temp", data=json.dumps(data))
     print("sent data", data)
-    res = req.content
+    res = json.loads(req.content.decode("utf-8"))
     req.close()
 
     disconnectFromWiFi()
@@ -100,7 +100,7 @@ def getSettings():
     connectToWiFi()
 
     req = requests.get("https://tmdash.rimell.cc/api/get_settings")
-    res = req.content
+    res = json.loads(req.content.decode("utf-8"))
 
     disconnectFromWiFi()
     print("settings:", res)
