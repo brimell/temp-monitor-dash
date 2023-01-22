@@ -28,7 +28,7 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 #         if entry['IP address'] == ip:
 #             return entry['HW address']
 #     return None
-
+mode = 'normal' # normal / saver
 
 def connectCursor():
     temp_db = mysql.connector.connect(
@@ -72,8 +72,17 @@ def get_time():
     dt = datetime.now()
     date = str(dt) + '~' + str(dt.weekday())
     return date
+
+@api.route("/get_mode", methods=["GET"])
+def get_mode():
+    return mode
+@api.route("/set_mode", methods=["POST"])
+def get_mode():
+    global mode
+    payload = json.loads(request.data)
+    mode = payload.mode
     
-@api.route("/post_temp", methods=["POST"])
+@api.route("/post_temp", methods=["GET"])
 def post_temp():
 
     cursor, temp_db = connectCursor()
