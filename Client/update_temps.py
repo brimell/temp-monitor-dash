@@ -108,4 +108,5 @@ while True:
         print(e)
         
     gc.collect()
-    utime.sleep(SLEEP_TIME)
+    # utime.sleep(SLEEP_TIME)
+    machine.deepsleep(SLEEP_TIME * 1000)
