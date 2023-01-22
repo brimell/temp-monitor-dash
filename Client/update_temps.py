@@ -96,14 +96,14 @@ def sendData(data):
         return res
 
 
-def getMode():
+def getSettings():
     connectToWiFi()
 
-    req = requests.get("https://tmdash.rimell.cc/api/get_mode")
-    res = req.content.decode("ascii")
+    req = requests.get("https://tmdash.rimell.cc/api/get_settings")
+    res = req.settings
 
     disconnectFromWiFi()
-    print("mode:", res)
+    print("settings:", res)
     return res
 
 
@@ -124,7 +124,7 @@ cached_data = []
 
 setTime()
 
-currentMode = getMode()
+currentMode = getSettings()
 
 if currentMode == "normal":
     while True:

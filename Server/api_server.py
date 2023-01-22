@@ -28,7 +28,13 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 #         if entry['IP address'] == ip:
 #             return entry['HW address']
 #     return None
-mode = "normal"  # normal / saver
+
+settings_state = {
+    mode: "normal",  # normal / saver
+    sleep_time: 5,  # in seconds
+    send_to_server_interval: 1,  # in minutes
+    ds_send_to_server_interval: 10,  # in minutes -> for {mode: saver}
+}
 
 
 def connectCursor():
@@ -75,9 +81,9 @@ def get_time():
     return date
 
 
-@api.route("/get_mode", endpoint="func1", methods=["GET"])
+@api.route("/get_settings", endpoint="func1", methods=["GET"])
 def get_mode():
-    return mode
+    return {settings: settings_state}
 
 
 @api.route("/set_mode", endpoint="func2", methods=["POST"])
