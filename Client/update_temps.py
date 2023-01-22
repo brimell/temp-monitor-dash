@@ -100,11 +100,11 @@ def getMode():
     connectToWiFi()
 
     req = requests.get("https://tmdash.rimell.cc/api/get_mode")
-    res = req.content
+    res = req.content.decode("ascii")
 
     disconnectFromWiFi()
-    print("mode:", res.decode("ascii"))
-    return res.decode("ascii")
+    print("mode:", res)
+    return res
 
 
 MAC = ubinascii.hexlify(network.WLAN().config("mac"), ":").decode()
@@ -123,7 +123,6 @@ ds_send_to_server_interval = 10
 cached_data = []
 
 setTime()
-disconnectFromWiFi()
 
 currentMode = getMode()
 
