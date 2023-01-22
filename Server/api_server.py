@@ -28,7 +28,8 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 #         if entry['IP address'] == ip:
 #             return entry['HW address']
 #     return None
-mode = 'normal' # normal / saver
+mode = "normal"  # normal / saver
+
 
 def connectCursor():
     temp_db = mysql.connector.connect(
@@ -70,30 +71,34 @@ def get_temps():
 @api.route("/get_time", methods=["GET"])
 def get_time():
     dt = datetime.now()
-    date = str(dt) + '~' + str(dt.weekday())
+    date = str(dt) + "~" + str(dt.weekday())
     return date
 
-@api.route("/get_mode", methods=["GET"])
+
+@api.route("/get_mode", endpoint="func1", methods=["GET"])
 def get_mode():
     return mode
-@api.route("/set_mode", methods=["POST"])
+
+
+@api.route("/set_mode", endpoint="func2", methods=["POST"])
 def get_mode():
     global mode
     payload = json.loads(request.data)
     mode = payload.mode
-    
+
+
 @api.route("/post_temp", methods=["GET"])
 def post_temp():
 
     cursor, temp_db = connectCursor()
-    
+
     def getDeviceID(client_mac):
         sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
         data = (str(client_mac),)
-        cursor.execute(sql,data)
+        cursor.execute(sql, data)
         return cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
 
-    def addTempToDB(temp,ts, d_id):
+    def addTempToDB(temp, ts, d_id):
         sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES (%s, %s, %s)"
         data = (temp, ts, d_id)
         cursor.execute(sql, data)
@@ -101,36 +106,36 @@ def post_temp():
     def addBatteryPercToDB(perc, cstat, ts, d_id):
         sql = f"INSERT INTO temperature_db.battery_usage (battery_percentage, charging_status, timestamp, device_id) VALUES (%s, %s, %s, %s)"
         data = (perc, cstat, ts, d_id)
-        cursor.execute(sql,data)
+        cursor.execute(sql, data)
 
     def addNewDevice(client_mac):
         sql = f"INSERT INTO temperature_db.devices (mac) VALUES (%s);"
         data = (str(client_mac),)
         cursor.execute(sql, data)
-        
+
     payload = json.loads(request.data)
     client_mac = payload[0]["mac"]
     device_id = getDeviceID(client_mac)
-    
+
     for i in range(len(payload)):
         client_ip = request.remote_addr
-        ts = payload[i]['ts']
+        ts = payload[i]["ts"]
         ts = datetime.fromtimestamp(ts)
-        temp = payload[i]['temperature']
-        
-        perc = payload[i]['battery_percentage']
-        cstat = payload[i]['charging_status']
+        temp = payload[i]["temperature"]
+
+        perc = payload[i]["battery_percentage"]
+        cstat = payload[i]["charging_status"]
 
         # check if the device exists in the device db
         if device_id:
-            addTempToDB(temp,ts,device_id)
+            addTempToDB(temp, ts, device_id)
             addBatteryPercToDB(perc, cstat, ts, device_id)
         else:
             # add new device if the device does not exist yet
             addNewDevice(client_mac)
-            addTempToDB(temp,ts,device_id)
+            addTempToDB(temp, ts, device_id)
             addBatteryPercToDB(perc, cstat, ts, device_id)
-    temp_db.commit() # commit after inserts so that only 1 commit is made
+    temp_db.commit()  # commit after inserts so that only 1 commit is made
     cursor.close()
 
     return " "
