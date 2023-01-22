@@ -124,9 +124,9 @@ cached_data = []
 
 setTime()
 
-currentMode = getSettings()
+settings = getSettings()
 
-if currentMode == "normal":
+if settings['mode'] == "normal":
     while True:
         if len(cached_data) >= send_to_server_interval * (
             60 / sleep_time
@@ -141,7 +141,7 @@ if currentMode == "normal":
 
         gc.collect()
         utime.sleep(sleep_time)
-elif currentMode == "saver":
+elif settings['mode'] == "saver":
     while True:
         sendData(collectData())
         machine.deepsleep(ds_send_to_server_interval)
