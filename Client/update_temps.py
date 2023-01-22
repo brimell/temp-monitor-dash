@@ -100,7 +100,7 @@ def getSettings():
     connectToWiFi()
 
     req = requests.get("https://tmdash.rimell.cc/api/get_settings")
-    res = req.settings
+    res = req
 
     disconnectFromWiFi()
     print("settings:", res)
