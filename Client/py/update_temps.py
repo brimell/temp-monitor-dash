@@ -118,7 +118,7 @@ EMPTY_BATTERY = 2.8
 sleep_time = 5  # in seconds
 send_to_server_interval = 1  # in minutes
 
-ds_send_to_server_interval = 10
+ds_send_to_server_interval = 10 # in milliseconds
 
 cached_data = []
 
