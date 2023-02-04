@@ -31,7 +31,7 @@ def disconnectFromWiFi():
 def getCode():
     print("fetching...")
     
-    url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/update_temps.py"
+    url = "https://raw.githubusercontent.com/brimell/temp-monitor-dash/master/Client/py/update_temps.py"
     # url = "https://rimell.cc/bill/update_temps.py"
     
     r = requests.get(url)
