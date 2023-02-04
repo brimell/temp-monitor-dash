@@ -144,4 +144,4 @@ if settings['mode'] == "normal":
 elif settings['mode'] == "saver":
     while True:
         sendData(collectData())
-        machine.deepsleep(ds_send_to_server_interval * 60000)
+        machine.deepsleep(ds_send_to_server_interval * 60000) # converts from minutes to milliseconds
