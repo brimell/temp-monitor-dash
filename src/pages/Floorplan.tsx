@@ -153,6 +153,32 @@ export default function Floorplan() {
 					</button>
 				</li>
 			</ul>
+			<ul className="filter-tabs">
+				<li>
+					<button
+						className="filter-button filter-active"
+						data-translate-value="0"
+					>
+						New
+					</button>
+				</li>
+				<li>
+					<button
+						className="filter-button"
+						data-translate-value="100%"
+					>
+						Popular
+					</button>
+				</li>
+				<li>
+					<button
+						className="filter-button"
+						data-translate-value="200%"
+					>
+						Following
+					</button>
+				</li>
+			</ul>
 			<div
 				className="floorplan"
 				onTouchMove={mouseMove}
