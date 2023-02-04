@@ -118,7 +118,7 @@ EMPTY_BATTERY = 2.8
 sleep_time = 5  # in seconds
 send_to_server_interval = 1  # in minutes
 
-ds_send_to_server_interval = 10 # in milliseconds
+ds_send_to_server_interval = 10 # in minutes
 
 cached_data = []
 
@@ -144,4 +144,4 @@ if settings['mode'] == "normal":
 elif settings['mode'] == "saver":
     while True:
         sendData(collectData())
-        machine.deepsleep(ds_send_to_server_interval)
+        machine.deepsleep(ds_send_to_server_interval * 60000)
