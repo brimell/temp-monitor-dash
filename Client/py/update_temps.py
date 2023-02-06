@@ -118,10 +118,6 @@ CONVERSION_FACTOR = 3.3 / 65535
 FULL_BATTERY = 4.2
 EMPTY_BATTERY = 2.8
 
-sleep_time = 5  # in seconds
-send_to_server_interval = 1  # in minutes
-
-ds_send_to_server_interval = 10  # in minutes
 
 cached_data = []
 
@@ -131,8 +127,8 @@ settings = getSettings()
 
 if settings["mode"] == "normal":
     while True:
-        if len(cached_data) >= send_to_server_interval * (
-            60 / sleep_time
+        if len(cached_data) >= settings["send_to_server_interval"] * (
+            60 / settings["sleep_time"]
         ):  # minutes * 60 / sleep_time = frequency
             sendData(cached_data)
             cached_data = []
@@ -143,10 +139,10 @@ if settings["mode"] == "normal":
             print(e)
 
         gc.collect()
-        utime.sleep(sleep_time)
+        utime.sleep(settings["sleep_time"])
 elif settings["mode"] == "saver":
     while True:
         sendData(collectData())
         machine.deepsleep(
-            ds_send_to_server_interval * 60000
+            settings["ds_send_to_server_interval"] * 60000
         )  # converts from minutes to milliseconds
