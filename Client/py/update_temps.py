@@ -93,11 +93,15 @@ def sendData(data):
 
     disconnectFromWiFi()
     try:
-        return json.loads(res)
+        newSettings = json.loads(res)
+        updateSettings(newSettings)
     except:
-        return None
+        print("no new settings to update")
 
-
+def updateSettings(newSettings):
+    global settings
+    settings = newSettings.copy()
+    
 def getSettings():
     connectToWiFi()
 

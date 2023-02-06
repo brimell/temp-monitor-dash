@@ -32,8 +32,8 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 settings_state = {
     "mode": "normal",  # normal / saver
     "sleep_time": 5,  # in seconds
-    "send_to_server_interval": 1/6,  # in minutes
-    "ds_send_to_server_interval": 10,  # in minutes -> for {mode: saver}
+    "send_to_server_interval": 5,  # in minutes
+    "ds_send_to_server_interval": 30,  # in minutes -> for {mode: saver}
 }
 
 
