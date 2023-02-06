@@ -32,7 +32,7 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 settings_state = {
     "mode": "normal",  # normal / saver
     "sleep_time": 5,  # in seconds
-    "send_to_server_interval": 1,  # in minutes
+    "send_to_server_interval": 1/6,  # in minutes
     "ds_send_to_server_interval": 10,  # in minutes -> for {mode: saver}
 }
 
@@ -102,7 +102,15 @@ def post_temp():
         sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
         data = (str(client_mac),)
         cursor.execute(sql, data)
-        return cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
+        d_id = cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
+        
+        if d_id:
+            # if device id exists in the db
+            return d_id # [0][0] because the sql fetches the row
+        else:
+            # if the device hasn't been added to the db yet
+            addNewDevice(client_mac) # add device to db
+            return getDeviceID(client_mac) # then return its ID
 
     def addTempToDB(temp, ts, d_id):
         sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES (%s, %s, %s)"
@@ -133,14 +141,8 @@ def post_temp():
         cstat = payload[i]["charging_status"]
 
         # check if the device exists in the device db
-        if device_id:
-            addTempToDB(temp, ts, device_id)
-            addBatteryPercToDB(perc, cstat, ts, device_id)
-        else:
-            # add new device if the device does not exist yet
-            addNewDevice(client_mac)
-            addTempToDB(temp, ts, device_id)
-            addBatteryPercToDB(perc, cstat, ts, device_id)
+        addTempToDB(temp, ts, device_id)
+        addBatteryPercToDB(perc, cstat, ts, device_id)
     temp_db.commit()  # commit after inserts so that only 1 commit is made
     cursor.close()
 
