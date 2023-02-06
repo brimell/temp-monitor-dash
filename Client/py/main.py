@@ -15,7 +15,7 @@ def connectToWiFi():
         print('no connection')
         utime.sleep(2)
         count += 1
-        if count >= 10:
+        if count >= 5:
             wlan.active(False)
             wlan.active(True)
             wlan.connect(SSID, PWD)

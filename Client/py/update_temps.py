@@ -92,9 +92,9 @@ def sendData(data):
     req.close()
 
     disconnectFromWiFi()
-    if res:
+    try:
         return json.loads(res)
-    else:
+    except:
         return None
 
 
