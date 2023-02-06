@@ -35,7 +35,7 @@ settings_state = {
     "send_to_server_interval": 5,  # in minutes
     "ds_send_to_server_interval": 30,  # in minutes -> for {mode: saver}
 }
-
+updated_settings = False
 
 def connectCursor():
     temp_db = mysql.connector.connect(
@@ -64,7 +64,8 @@ def get_temps():
         found_dev_temps = []
         for temp in temperatures:
             if temp[2] not in found_dev_temps:
-                devices_temp_list[temp[2]] = temp  # temp[2] is "device_id"
+                device_id = temp[2]
+                devices_temp_list[device_id] = temp
                 found_dev_temps.append(temp[2])
 
         # cursor.close()
@@ -146,7 +147,12 @@ def post_temp():
     temp_db.commit()  # commit after inserts so that only 1 commit is made
     cursor.close()
 
-    return " "
+    if updated_settings:
+        global updated_settings
+        updated_settings = False
+        return settings_state
+    else:
+        return " "
 
 
 # error handling
