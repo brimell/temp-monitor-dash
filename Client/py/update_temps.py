@@ -88,12 +88,14 @@ def sendData(data):
     # r = requests.post('http://192.168.1.90:3003/post_temp', data = json.dumps(cached_data))
     req = requests.get("https://tmdash.rimell.cc/api/post_temp", data=json.dumps(data))
     print("sent data", data)
-    res = json.loads(req.content.decode("utf-8"))
+    res = req.content.decode("utf-8")
     req.close()
 
     disconnectFromWiFi()
     if res:
-        return res
+        return json.loads(res)
+    else:
+        return None
 
 
 def getSettings():
@@ -104,6 +106,7 @@ def getSettings():
 
     disconnectFromWiFi()
     print("settings:", res)
+
     return res
 
 
@@ -118,7 +121,7 @@ EMPTY_BATTERY = 2.8
 sleep_time = 5  # in seconds
 send_to_server_interval = 1  # in minutes
 
-ds_send_to_server_interval = 10 # in minutes
+ds_send_to_server_interval = 10  # in minutes
 
 cached_data = []
 
@@ -126,7 +129,7 @@ setTime()
 
 settings = getSettings()
 
-if settings['mode'] == "normal":
+if settings["mode"] == "normal":
     while True:
         if len(cached_data) >= send_to_server_interval * (
             60 / sleep_time
@@ -141,7 +144,9 @@ if settings['mode'] == "normal":
 
         gc.collect()
         utime.sleep(sleep_time)
-elif settings['mode'] == "saver":
+elif settings["mode"] == "saver":
     while True:
         sendData(collectData())
-        machine.deepsleep(ds_send_to_server_interval * 60000) # converts from minutes to milliseconds
+        machine.deepsleep(
+            ds_send_to_server_interval * 60000
+        )  # converts from minutes to milliseconds
