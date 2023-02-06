@@ -102,11 +102,11 @@ def post_temp():
         sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
         data = (str(client_mac),)
         cursor.execute(sql, data)
-        d_id = cursor.fetchall()[0][0]  # [0][0] because the sql fetches the row
+        sql_res = cursor.fetchall() 
         
-        if d_id:
+        if sql_res:
             # if device id exists in the db
-            return d_id # [0][0] because the sql fetches the row
+            return sql_res[0][0] # [0][0] because the sql fetches the row
         else:
             # if the device hasn't been added to the db yet
             addNewDevice(client_mac) # add device to db
