@@ -37,6 +37,7 @@ settings_state = {
 }
 updated_settings = False
 
+
 def connectCursor():
     temp_db = mysql.connector.connect(
         host="www.rimell.cc",
@@ -97,21 +98,22 @@ def get_mode():
 @api.route("/post_temp", methods=["GET"])
 def post_temp():
 
+    global updated_settings
     cursor, temp_db = connectCursor()
 
     def getDeviceID(client_mac):
         sql = "SELECT * FROM temperature_db.devices WHERE mac = %s"
         data = (str(client_mac),)
         cursor.execute(sql, data)
-        sql_res = cursor.fetchall() 
-        
+        sql_res = cursor.fetchall()
+
         if sql_res:
             # if device id exists in the db
-            return sql_res[0][0] # [0][0] because the sql fetches the row
+            return sql_res[0][0]  # [0][0] because the sql fetches the row
         else:
             # if the device hasn't been added to the db yet
-            addNewDevice(client_mac) # add device to db
-            return getDeviceID(client_mac) # then return its ID
+            addNewDevice(client_mac)  # add device to db
+            return getDeviceID(client_mac)  # then return its ID
 
     def addTempToDB(temp, ts, d_id):
         sql = f"INSERT INTO temperature_db.temperatures (temperature, timestamp, device_id) VALUES (%s, %s, %s)"
@@ -148,7 +150,6 @@ def post_temp():
     cursor.close()
 
     if updated_settings:
-        global updated_settings
         updated_settings = False
         return settings_state
     else:
