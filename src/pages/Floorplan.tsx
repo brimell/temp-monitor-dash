@@ -151,6 +151,7 @@ export default function Floorplan() {
 								}
 								index={temp[2]}
 							>
+								({temp[2]})
 								<svg
 									width="12"
 									height="20"
