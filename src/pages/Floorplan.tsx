@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import $ from "jquery";
 import { MainContext } from "../context/context";
-import axios from "axios";
-import { apiUrl } from "../context/constants";
 import FloorplanNav from "../components/nav/FloorplanNav";
 
 interface stylesI {
@@ -17,22 +14,11 @@ export default function Floorplan() {
 	const [dragging_id, setDragging_id] = useState<string>("");
 	const [styles, setStyles] = useState<stylesI>();
 	const [mobile, setMobile] = useState<boolean>(false);
-	const [temps, setTemps] = useState({
-		1: ["-", "loading", 1],
-	});
+
 	const [floor, setFloor] = useState(
 		localStorage.getItem("current_floor") || "downstairs"
 	);
-
-	useEffect(() => {
-		function getLatestTemps() {
-			axios.get(apiUrl() + "/get_latest_temps").then((data) => {
-				setTemps(data.data);
-			});
-		}
-		getLatestTemps();
-		setInterval(getLatestTemps, 5000);
-	}, []);
+	const { temps } = useContext(MainContext);
 
 	function DraggableItem(props) {
 		// if (document.readState == "complete") {

@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@components/*": ["src/components/*"],
+			"@utils/*": ["utils/*"],
+			"@store": ["lib/store"],
+			"@context/*": ["src/context/*"]
+		},
+		"lib": ["dom", "dom.iterable"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": false,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"incremental": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"moduleResolution": "Node",
+		"resolveJsonModule": true,
+		"types": ["vite/client"],
+		"emitDecoratorMetadata": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true
+	},
+	"include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+	"exclude": ["node_modules"]
+}
