@@ -3,6 +3,7 @@ import $ from "jquery";
 import { MainContext } from "../context/context";
 import axios from "axios";
 import { apiUrl } from "../context/constants";
+import FloorplanNav from "../components/nav/FloorplanNav";
 
 interface stylesI {
 	left?: number;
@@ -129,56 +130,7 @@ export default function Floorplan() {
 
 	return (
 		<>
-			<ul className="floorplan-nav">
-				<li className="downstairs">
-					<button
-						onClick={() => {
-							setFloor("downstairs");
-							localStorage.setItem("current_floor", "downstairs");
-						}}
-						className={floor == "downstairs" ? "selected" : ""}
-					>
-						Downstairs
-					</button>
-				</li>
-				<li className="upstairs">
-					<button
-						onClick={() => {
-							setFloor("upstairs");
-							localStorage.setItem("current_floor", "upstairs");
-						}}
-						className={floor == "upstairs" ? "selected" : ""}
-					>
-						Upstairs
-					</button>
-				</li>
-			</ul>
-			<ul className="filter-tabs">
-				<li>
-					<button
-						className="filter-button filter-active"
-						data-translate-value="0"
-					>
-						New
-					</button>
-				</li>
-				<li>
-					<button
-						className="filter-button"
-						data-translate-value="100%"
-					>
-						Popular
-					</button>
-				</li>
-				<li>
-					<button
-						className="filter-button"
-						data-translate-value="200%"
-					>
-						Following
-					</button>
-				</li>
-			</ul>
+			<FloorplanNav setFloor={setFloor} floor={floor} />
 			<div
 				className="floorplan"
 				onTouchMove={mouseMove}
