@@ -3,6 +3,21 @@
 @import "./loading.scss";
 @import "./floorplan.scss";
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+
+::-webkit-scrollbar {
+	width: 6px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: gray;
+	border-radius: 12px;
+	min-height: 8%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html {
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;

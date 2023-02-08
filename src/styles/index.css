@@ -1,0 +1,12 @@
+:-webkit-scrollbar {
+	width: 6px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: gray;
+	border-radius: 12px;
+	min-height: 8%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

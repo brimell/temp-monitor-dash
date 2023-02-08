@@ -1,6 +1,6 @@
 import React, { useEffect, Suspense, lazy, useState } from "react";
 import "./styles/global.scss";
-
+import "./styles/index.css";
 import Loading from "./components/Loading";
 import ReloadPrompt from "./components/ReloadPrompt";
 
