@@ -13,6 +13,8 @@ import {
 	SliderFilledTrack,
 	SliderThumb,
 	SliderTrack,
+	Switch,
+	Tooltip,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
@@ -51,26 +53,16 @@ function HolidayModeToggle() {
 			variant="outline"
 		>
 			<CardBody>
-				<a style={{ fontSize: "16px" }}>
-					Refresh Rate: every {refreshRate} seconds
-				</a>
-			</CardBody>
-
-			<CardFooter>
-				<Slider
-					aria-label="slider-ex-1"
-					defaultValue={10}
-					value={refreshRate}
-					onChange={(val) => {
-						setRefreshRate(val);
-					}}
+				<Stack
+					direction="row"
+					style={{ justifyContent: "space-between" }}
 				>
-					<SliderTrack>
-						<SliderFilledTrack />
-					</SliderTrack>
-					<SliderThumb />
-				</Slider>
-			</CardFooter>
+					<Tooltip label="Reduced power consumption" aria-label="A tooltip">
+						<a style={{ fontSize: "16px" }}>Holiday Mode</a>
+					</Tooltip>
+					<Switch colorScheme="green" size="lg" />
+				</Stack>
+			</CardBody>
 		</Card>
 	);
 }
