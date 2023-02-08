@@ -31,16 +31,50 @@ export default function Settings() {
 				</CardHeader>
 
 				<CardBody>
-					{/* <TempSelector /> */}
-					<RefreshRateSlider />
-					<HolidayModeToggle />
-					{/* <DevicesPanel /> */}
+					<Stack>
+						{/* <TempSelector /> */}
+						<RefreshRateSlider />
+						<HolidayModeToggle />
+						{/* <DevicesPanel /> */}
+					</Stack>
 				</CardBody>
 			</Card>
 		</>
 	);
 }
-function HolidayModeToggle() {}
+function HolidayModeToggle() {
+	const [refreshRate, setRefreshRate] = useState(10);
+	return (
+		<Card
+			direction={{ base: "column", sm: "row" }}
+			overflow="hidden"
+			variant="outline"
+		>
+			<CardBody>
+				<a style={{ fontSize: "16px" }}>
+					Refresh Rate: every {refreshRate} seconds
+				</a>
+			</CardBody>
+
+			<CardFooter>
+				<Slider
+					aria-label="slider-ex-1"
+					defaultValue={10}
+					value={refreshRate}
+					onChange={(val) => {
+						setRefreshRate(val);
+					}}
+				>
+					<SliderTrack>
+						<SliderFilledTrack />
+					</SliderTrack>
+					<SliderThumb />
+				</Slider>
+			</CardFooter>
+		</Card>
+	);
+}
+
 function RefreshRateSlider() {
 	const [refreshRate, setRefreshRate] = useState(10);
 	return (
