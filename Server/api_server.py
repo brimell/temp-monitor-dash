@@ -13,7 +13,7 @@ api = Flask(__name__)
 cors = CORS(api, resources={r"*": {"origins": "*"}})
 
 
-# data structure
+### data structure ###
 
 # temperatures table
 # temperature, timestamp, device_id
@@ -32,8 +32,8 @@ cors = CORS(api, resources={r"*": {"origins": "*"}})
 settings_state = {
     "mode": "normal",  # normal / saver
     "sleep_time": 300,  # in seconds
-    "send_to_server_interval": 60,  # in minutes
-    "ds_send_to_server_interval": 30,  # in minutes -> for {mode: saver}
+    "send_to_server_interval": 30,  # in minutes
+    "ds_send_to_server_interval": 60,  # in minutes -> for {mode: saver}
 }
 updated_settings = False
 

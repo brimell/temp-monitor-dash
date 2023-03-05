@@ -98,10 +98,12 @@ def sendData(data):
     except:
         print("no new settings to update")
 
+
 def updateSettings(newSettings):
     global settings
     settings = newSettings.copy()
-    
+
+
 def getSettings():
     connectToWiFi()
 
@@ -131,8 +133,9 @@ settings = getSettings()
 
 if settings["mode"] == "normal":
     while True:
-        if len(cached_data) >= settings["send_to_server_interval"] * (
-            60 / settings["sleep_time"]
+        if (
+            len(cached_data)
+            >= (settings["send_to_server_interval"] * 60) / settings["sleep_time"]
         ):  # minutes * 60 / sleep_time = frequency
             sendData(cached_data)
             cached_data = []
@@ -140,7 +143,8 @@ if settings["mode"] == "normal":
         try:
             cached_data.append(collectData())
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
 
         gc.collect()
         utime.sleep(settings["sleep_time"])
